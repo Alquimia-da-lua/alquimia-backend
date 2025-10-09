@@ -3,5 +3,5 @@ package com.alquimia.backend.controller;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class ProdutoController {
+public class EnderecoController {
 }
