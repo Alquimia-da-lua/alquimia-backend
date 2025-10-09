@@ -11,16 +11,18 @@ import lombok.NoArgsConstructor;
 @Table(name = "itemPedido")
 public class ItemPedido {
 
+    @Column(nullable = false)
     private Double vlItemPedido;
+    @Column(nullable = false)
     private Integer qtItemPedido;
 
     @ManyToOne
     @JoinColumn(name = "cdPedido")
     private Pedido cdPedido;
 
-//    @ManyToOne
-//    @JoinColumn(name = "cdProduto")
-//    private Produto cdProduto
+    @ManyToOne
+    @JoinColumn(name = "cdProduto")
+    private Produto cdProduto;
 
 
 }
