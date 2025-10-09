@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ItemEstoque {
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "cd_produto", nullable = false)
     @Column(nullable = false)
-    private Produto cdProduto;*/
+    private Produto cdProduto;
 
     @ManyToOne
     @JoinColumn(name = "cd_estoque")

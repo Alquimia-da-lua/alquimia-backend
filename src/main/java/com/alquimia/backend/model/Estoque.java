@@ -17,7 +17,7 @@ public class Estoque {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer cdEstoque;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private Boolean isAtivo;
 
     private List<ItemEstoque> itens;
