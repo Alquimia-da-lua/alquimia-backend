@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Usuario {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -31,5 +30,16 @@ public abstract class Usuario {
 
     private boolean isAtivo;
 
+    @Column(unique = true)
     private String nuCpf;
+
+    @OneToOne(mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Funcionario funcionario;
+
+    @OneToOne(mappedBy = "usuario",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Cliente cliente;
 }
