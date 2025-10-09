@@ -10,11 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "cliente")
-public class Cliente extends Usuario{
+public class Cliente {
     @Id
     private Integer cdUsuario;
 
-    //@ManyToOne
-  //  @JoinColumn(name = "cd_endereco")
-//    private Endereco cdendereco;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "cdUsuario")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "cd_endereco")
+    private Endereco cdendereco;
 }
