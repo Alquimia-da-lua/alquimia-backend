@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ItemEstoque {
 
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer cdItemEstoque;
+
     @ManyToOne
     @JoinColumn(name = "cd_produto", nullable = false)
     @Column(nullable = false)
