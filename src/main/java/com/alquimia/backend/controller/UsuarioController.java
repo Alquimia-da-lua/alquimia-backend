@@ -7,6 +7,7 @@ import com.alquimia.backend.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,34 +32,25 @@ public class UsuarioController {
                 .body(novoUsuario);
     }
 
-    @GetMapping("/{cdUsuario")
+    @GetMapping("/{cdUsuario}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable("cdUsuario") int cdUsuario){
         var usuario = usuarioService.buscarUsuario(cdUsuario);
 
-        if(usuario != null){
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(usuario);
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuario);
     }
 
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuario(){
-        var usuarios = usuarioService.listarUsuarios();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(usuarios);
+                .body(usuarioService.listarUsuarios());
     }
 
     @DeleteMapping("/{cdUsuario}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable("cdUsuario") int cdUsuario){
-        var usuario = usuarioService.deletarUsuario(cdUsuario);
+        usuarioService.deletarUsuario(cdUsuario);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

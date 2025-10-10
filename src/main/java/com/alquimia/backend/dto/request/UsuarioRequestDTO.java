@@ -23,8 +23,6 @@ public record UsuarioRequestDTO(
         @NotBlank
         String nuTelefone,
 
-        boolean isAtivo,
-
         @NotBlank
         String nuCpf
 
