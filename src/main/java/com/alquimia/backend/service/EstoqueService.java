@@ -29,6 +29,7 @@ public class EstoqueService {
         List<ItemEstoqueResponseDTO> itensEstoque = novoEstoque.getItens()
                 .stream()
                 .map(i -> new ItemEstoqueResponseDTO(
+                        i.getCdItemEstoque(),
                         i.getCdProduto().getCdProduto(),
                         i.getCdEstoque().getCdEstoque(),
                         i.getQtItemEstoque()
@@ -44,6 +45,7 @@ public class EstoqueService {
         List<ItemEstoqueResponseDTO> itensEstoque = estoque.getItens()
                 .stream()
                 .map(i -> new ItemEstoqueResponseDTO(
+                        i.getCdItemEstoque(),
                         i.getCdProduto().getCdProduto(),
                         i.getCdEstoque().getCdEstoque(),
                         i.getQtItemEstoque()
@@ -56,6 +58,7 @@ public class EstoqueService {
         var itensEstoqueAtivo = estoqueRepository.findAllByCdEstoqueAndIsAtivoTrue(cdEstoque);
 
         return itensEstoqueAtivo.stream().map(i -> new ItemEstoqueResponseDTO(
+                i.getCdItemEstoque(),
                 i.getCdProduto().getCdProduto(),
                 i.getCdEstoque().getCdEstoque(),
                 i.getQtItemEstoque()
