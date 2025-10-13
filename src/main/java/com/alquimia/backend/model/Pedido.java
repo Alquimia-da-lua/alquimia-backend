@@ -33,4 +33,8 @@ public class Pedido {
 
     List<ItemPedido> itens;
 
+    @ManyToOne
+    @JoinColumn(name = "cdCliente")
+    private Cliente cdCliente;
+
 }
