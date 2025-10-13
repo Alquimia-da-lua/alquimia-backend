@@ -32,7 +32,7 @@ public class PedidoService {
     public Pedido buscarPedido(Integer cdPedido){
         return pedidoRepository.findByCdPedido(cdPedido)
                 .orElseThrow(()-> new RuntimeException("Pedido não encontrado."));
+        System.out.println("Deu brat no meu commit, tentando de novo");
     }
-
 
 }
