@@ -54,16 +54,6 @@ public class EstoqueService {
         return new EstoqueResponseDTO(estoque.getCdEstoque(), estoque.getIsAtivo(), itensEstoque);
     }
 
-    public List<ItemEstoqueResponseDTO> itemPedidoAtivo (Integer cdEstoque){
-        var itensEstoqueAtivo = estoqueRepository.findAllByCdEstoqueAndIsAtivoTrue(cdEstoque);
-
-        return itensEstoqueAtivo.stream().map(i -> new ItemEstoqueResponseDTO(
-                i.getCdItemEstoque(),
-                i.getCdProduto().getCdProduto(),
-                i.getCdEstoque().getCdEstoque(),
-                i.getQtItemEstoque()
-        )).toList();
-    }
 
 
 
