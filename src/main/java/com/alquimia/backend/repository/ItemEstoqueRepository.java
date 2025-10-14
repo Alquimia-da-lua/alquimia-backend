@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ItemEstoqueRepository extends JpaRepository<ItemEstoqueRepository, Integer> {
+public interface ItemEstoqueRepository extends JpaRepository<ItemEstoque, Integer> {
+    //todos os itens dentro de um estoque específico
+    List<ItemEstoque> findByCdEstoque_CdEstoque(Integer cdEstoque);
 
+    //itens dentro de um estoque ativo
+    List<ItemEstoque> findByCdEstoque_CdEstoqueAndCdEstoque_IsAtivoTrue(Integer cdEstoque);
+
+    //buscar item por estoque e produto
+    Optional<ItemEstoque> findByCdEstoque_CdEstoqueAndCdProduto_CdProduto(Integer cdEstoque, Integer cdProduto);
 }

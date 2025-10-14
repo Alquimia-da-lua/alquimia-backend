@@ -10,8 +10,13 @@ import java.util.Optional;
 
 @Repository
 public interface EstoqueRepository extends JpaRepository<Estoque, Integer> {
-    Optional<Estoque> findByCdEstoque (Integer cdEstoque);
-    Boolean existsByCdEstoque(Integer cdEstoque);
-    List<ItemEstoque> findAllByIsAtivoTrue();
-    List<ItemEstoque> findAllByCdEstoqueAndIsAtivoTrue(Integer cdEstoque);
-}
+    //buscar por id (se quiser manter além do findById padrão)
+    Optional<Estoque> findByCdEstoque(Integer cdEstoque);
+
+    //existe estoque com id x
+    boolean existsByCdEstoque(Integer cdEstoque);
+
+    //lista so os estoques ativos
+    List<Estoque> findAllByIsAtivoTrue();
+
+    }
