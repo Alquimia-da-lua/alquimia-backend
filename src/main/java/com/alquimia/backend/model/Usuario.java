@@ -11,35 +11,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuario")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer cdUsuario;
 
+    @Column(nullable = false)
     private String nmUsuario;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String emailUsuario;
 
+    @Column(nullable = false)
     private String senhaUsuario;
 
+    @Enumerated(EnumType.STRING)
     private RoleUsuario roleUsuario;
 
+    @Column(nullable = false)
     private String nuTelefone;
 
     private boolean isAtivo;
 
     @Column(unique = true)
     private String nuCpf;
-
-    @OneToOne(mappedBy = "usuario",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private Funcionario funcionario;
-
-    @OneToOne(mappedBy = "usuario",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private Cliente cliente;
 }

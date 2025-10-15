@@ -2,6 +2,9 @@ package com.alquimia.backend.service;
 
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
+import com.alquimia.backend.enums.RoleUsuario;
+import com.alquimia.backend.model.Cliente;
+import com.alquimia.backend.model.Funcionario;
 import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
@@ -15,13 +18,17 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final ClienteService clienteService;
+    private final FuncionarioService funcionarioService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ClienteService clienteService, FuncionarioService funcionarioService) {
+        this.clienteService = clienteService;
         this.usuarioRepository = usuarioRepository;
+        this.funcionarioService = funcionarioService;
     }
 
     public UsuarioResponseDTO responseDto(Usuario usuario){
-        UsuarioResponseDTO dto = new UsuarioResponseDTO(
+        return new UsuarioResponseDTO(
                 usuario.getCdUsuario(),
                 usuario.getNmUsuario(),
                 usuario.getEmailUsuario(),
@@ -30,7 +37,6 @@ public class UsuarioService {
                 usuario.isAtivo(),
                 usuario.getNuCpf()
         );
-        return dto;
     }
 
     public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO requestDTO){
@@ -39,13 +45,28 @@ public class UsuarioService {
                     HttpStatus.CONFLICT, "Email já cadastrado"
             );
         }
-        var usuario = new Usuario();
-        BeanUtils.copyProperties(requestDTO, usuario);
-        usuario.setAtivo(true);
+        if(usuarioRepository.findByNuCpf(requestDTO.nuCpf()).isPresent()) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "CPF já cadastrado"
+            );
+        }
 
-        var usuarioSalvo =  usuarioRepository.save(usuario);
+        Usuario usuario = new Usuario();
 
-        return responseDto(usuarioSalvo);
+        // criação de usuário dependendo da role, talvez retirar a funcao de cadastrar funcionario por aqui no futuro
+        if (requestDTO.roleUsuario() == RoleUsuario.CLIENTE) {
+            Cliente cliente = new Cliente();
+            BeanUtils.copyProperties(requestDTO, cliente);
+
+            usuario = clienteService.cadastrarCliente(cliente);
+
+        } else if (requestDTO.roleUsuario() == RoleUsuario.FUNCIONARIO) {
+            Funcionario funcionario = new Funcionario();
+            BeanUtils.copyProperties(requestDTO, funcionario);
+
+            usuario = funcionarioService.cadastrarFuncionario(funcionario);
+        }
+        return responseDto(usuario);
     }
 
     public UsuarioResponseDTO buscarUsuario(Integer cdUsuario){
@@ -53,7 +74,6 @@ public class UsuarioService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Usuário não encontrado")
                 );
-
         return responseDto(usuario);
     }
 
@@ -62,6 +82,17 @@ public class UsuarioService {
                 .stream()
                 .map(this::responseDto)
                 .toList();
+    }
+
+    public UsuarioResponseDTO atualizarUsuario(Integer cdUsuario, UsuarioRequestDTO requestDTO){
+        var usuario = usuarioRepository.findByCdUsuario(cdUsuario)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Usuário não encontrado")
+                );
+
+        BeanUtils.copyProperties(requestDTO, usuario, "cdUsuario", "isAtivo", "roleUsuario");
+
+        return responseDto(usuarioRepository.save(usuario));
     }
 
     public void deletarUsuario(Integer cdUsuario){
@@ -74,7 +105,7 @@ public class UsuarioService {
     }
 
     public List<UsuarioResponseDTO> listarUsuariosAtivos() {
-        return usuarioRepository.findAllByIsAtivo(true)
+        return usuarioRepository.findAllByIsAtivoTrue()
                 .stream()
                 .map(this::responseDto)
                 .toList();

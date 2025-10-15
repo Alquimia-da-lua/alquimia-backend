@@ -5,21 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "cliente")
-public class Cliente {
-    @Id
-    private Integer cdUsuario;
+@PrimaryKeyJoinColumn(name = "cdUsuario")
+public class Cliente extends Usuario{
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "cdUsuario")
-    private Usuario usuario;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
 
     @ManyToOne
-    @JoinColumn(name = "cd_endereco")
-    private Endereco cdendereco;
+    @JoinColumn(name = "cdEndereco")
+    private Endereco cdEndereco;
 }
