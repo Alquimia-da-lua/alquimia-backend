@@ -1,8 +1,11 @@
 package com.alquimia.backend.service;
 
+import com.alquimia.backend.dto.request.ItemEstoqueRequestDTO;
 import com.alquimia.backend.dto.response.ItemEstoqueResponseDTO;
+import com.alquimia.backend.model.ItemEstoque;
 import com.alquimia.backend.repository.EstoqueRepository;
 import com.alquimia.backend.repository.ItemEstoqueRepository;
+import com.alquimia.backend.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,45 @@ public class  ItemEstoqueService {
 
     @Autowired
     EstoqueRepository estoqueRepository;
+
+    @Autowired
+    ProdutoRepository produtoRepository;
+
+    @Transactional
+    public ItemEstoqueResponseDTO criarOuAtualizarItem(ItemEstoqueRequestDTO dto){
+        var estoque = estoqueRepository.findByCdEstoque(dto.cdEstoque())
+                .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado"));
+
+        var produto = produtoRepository.findByCdProduto(dto.cdProduto())
+                .orElseThrow(()-> new IllegalArgumentException("Produto não cadastrado!"));
+
+        var itemSelecionado = itemEstoqueRepository.findByCdEstoque_CdEstoqueAndCdProduto_CdProduto(dto.cdEstoque(), dto.cdProduto());
+
+        ItemEstoque item;//ref do item (novo ou nao
+
+        if (itemSelecionado.isEmpty()){
+             item = new ItemEstoque();
+
+             item.setCdEstoque(estoque);
+             item.setCdProduto(produto);
+             item.setQtItemEstoque(dto.qtItemEstoque());
+
+             estoque.getItens().add(item);
+
+             item = itemEstoqueRepository.save(item);
+        }else{
+            item = itemSelecionado.get();
+
+            item.setQtItemEstoque(dto.qtItemEstoque());
+        }
+
+        return new ItemEstoqueResponseDTO(
+            item.getCdItemEstoque(),
+                item.getCdProduto().getCdProduto(),
+                item.getCdEstoque().getCdEstoque(),
+                item.getQtItemEstoque()
+        );
+    }
 
     @Transactional(readOnly = true)
     public List<ItemEstoqueResponseDTO> listarItensDoEstoque (Integer cdEstoque){
@@ -34,13 +76,31 @@ public class  ItemEstoqueService {
                 )).toList();
     }
 
+    @Transactional
     public void incrementarItem(Integer cdEstoque, Integer cdProduto, Integer qtde){
         if (qtde < 0) throw new IllegalArgumentException("Quantidade deve ser maior que 0");
 
         var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
                 .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado"));
-
         if(!Boolean.TRUE.equals(estoque.getIsAtivo())) throw new IllegalStateException("Estoque inativo");
+
+        var item = itemEstoqueRepository.findByCdEstoque_CdEstoqueAndCdProduto_CdProduto(cdEstoque,cdProduto)
+                .orElseThrow(()-> new IllegalArgumentException("Item nao encontrado no estoque"));
+
+        item.aumentarQtdeItemEstoque(qtde);
+    }
+
+    @Transactional
+    public void decrementarItem(Integer cdEstoque, Integer cdProduto, Integer qtde){
+        if (qtde <= 0) throw new IllegalArgumentException("Quantidade deve ser maior que zero!");
+
+        var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
+                .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado!"));
+
+        var item = itemEstoqueRepository.findByCdEstoque_CdEstoqueAndCdProduto_CdProduto(cdEstoque, cdProduto)
+                .orElseThrow(()-> new IllegalArgumentException("Item não encontrado no estoque"));
+
+        item.reduzirQtdeItemEstoque(qtde);
     }
 
 }
