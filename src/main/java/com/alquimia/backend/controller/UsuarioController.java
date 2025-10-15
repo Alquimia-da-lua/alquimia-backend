@@ -2,12 +2,10 @@ package com.alquimia.backend.controller;
 
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
-import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

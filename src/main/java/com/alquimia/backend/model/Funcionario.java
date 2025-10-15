@@ -6,19 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "funcionario")
-public class Funcionario{
-    @Id
-    private Integer cdUsuario;
+@PrimaryKeyJoinColumn(name = "cdUsuario")
+public class Funcionario extends Usuario{
 
     private Integer nuMatricula;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "cdUsuario")
-    private Usuario usuario;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cd_funcionario", referencedColumnName = "cdUsuario")
+    private List<Produto> produtos;
 }
