@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ItemEstoqueService {
+public class  ItemEstoqueService {
     @Autowired
     ItemEstoqueRepository itemEstoqueRepository;
 
