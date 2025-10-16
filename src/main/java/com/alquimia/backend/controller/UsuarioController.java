@@ -1,5 +1,6 @@
 package com.alquimia.backend.controller;
 
+import com.alquimia.backend.dto.request.AtualizarUsuarioRequestDTO;
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.service.UsuarioService;
@@ -25,9 +26,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioDto){
         UsuarioResponseDTO novoUsuario = usuarioService.cadastrarUsuario(usuarioDto);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(novoUsuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
     @GetMapping("/{cdUsuario}")
@@ -38,11 +37,18 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuario(){
+    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios(){
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(usuarioService.listarUsuarios());
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
+    }
+
+    @PutMapping("/{cdUsuario}")
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable("cdUsuario") int cdUsuario,
+                                                               @RequestBody @Valid AtualizarUsuarioRequestDTO usuarioDto) {
+
+        UsuarioResponseDTO usuarioAtualizado = usuarioService.atualizarUsuario(usuarioDto, cdUsuario);
+
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioAtualizado);
     }
 
     @DeleteMapping("/{cdUsuario}")
@@ -50,5 +56,10 @@ public class UsuarioController {
         usuarioService.deletarUsuario(cdUsuario);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/ativos")
+    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosAtivos(){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuariosAtivos());
     }
 }

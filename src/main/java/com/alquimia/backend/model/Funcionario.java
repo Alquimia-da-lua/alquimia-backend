@@ -19,6 +19,6 @@ public class Funcionario extends Usuario{
     private Integer nuMatricula;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cd_funcionario", referencedColumnName = "cdUsuario")
+    @JoinColumn(name = "cd_usuario", referencedColumnName = "cdUsuario")
     private List<Produto> produtos;
 }

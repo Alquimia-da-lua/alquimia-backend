@@ -10,7 +10,10 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByCdUsuario(Integer cdUsuario);
+
+    // listar todos usuarios ativos
     List<Usuario> findAllByIsAtivoTrue();
+
     Optional<Usuario> findByEmailUsuario(String emailUsuario);
     Optional<Usuario> findByNuCpf(String nuCpf);
 }

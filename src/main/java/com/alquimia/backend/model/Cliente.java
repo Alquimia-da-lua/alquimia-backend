@@ -16,6 +16,7 @@ import java.util.List;
 public class Cliente extends Usuario{
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cd_cliente", referencedColumnName = "cdUsuario")
     private List<Pedido> pedidos;
 
     @ManyToOne
