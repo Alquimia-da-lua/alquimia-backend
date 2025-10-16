@@ -11,8 +11,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "itemPedido")
 public class ItemPedido {
 
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer cdItemPedido;
+
     @Column(nullable = false)
     private Double vlItemPedido;
+
     @Column(nullable = false)
     private Integer qtItemPedido;
 

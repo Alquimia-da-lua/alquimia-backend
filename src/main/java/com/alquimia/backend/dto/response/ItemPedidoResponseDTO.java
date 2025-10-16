@@ -6,15 +6,17 @@ import com.alquimia.backend.model.ItemPedido;
 import com.alquimia.backend.model.Pedido;
 import com.alquimia.backend.model.Produto;
 
-public record ItemPedidoResponseDTO(Pedido cdPedido,
+public record ItemPedidoResponseDTO(Integer cdItemPedido,
+                                    Pedido cdPedido,
                                     ProdutoResponseDTO cdProduto,
                                     Double vlItemPedido,
                                     Integer qtItemPedido) {
     public ItemPedidoResponseDTO(ItemPedido itemPedido){
         this(
-        itemPedido.getCdPedido(),
-        new ProdutoResponseDTO(itemPedido.getCdProduto()),
-        itemPedido.getVlItemPedido(),
-        itemPedido.getQtItemPedido());
+                itemPedido.getCdItemPedido(),
+                itemPedido.getCdPedido(),
+                new ProdutoResponseDTO(itemPedido.getCdProduto()),
+                itemPedido.getVlItemPedido(),
+                itemPedido.getQtItemPedido());
     }
 }
