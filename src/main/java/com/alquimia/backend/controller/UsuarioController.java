@@ -1,7 +1,9 @@
 package com.alquimia.backend.controller;
 
 import com.alquimia.backend.dto.request.AtualizarUsuarioRequestDTO;
+import com.alquimia.backend.dto.request.LoginRequestDTO;
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
+import com.alquimia.backend.dto.response.LoginResponseDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -40,6 +42,14 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios(){
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
+    }
+
+    // funcao incompleta, esperar pelo jwt
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginDto){
+        var usuario = usuarioService.login(loginDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDTO(""));
     }
 
     @PutMapping("/{cdUsuario}")

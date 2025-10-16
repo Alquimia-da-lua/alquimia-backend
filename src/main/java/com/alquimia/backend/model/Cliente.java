@@ -19,7 +19,7 @@ public class Cliente extends Usuario{
     @JoinColumn(name = "cd_cliente", referencedColumnName = "cdUsuario")
     private List<Pedido> pedidos;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "cdEndereco")
     private Endereco cdEndereco;
 }
