@@ -12,4 +12,5 @@ public interface ItemPedidoRepository  extends JpaRepository<ItemPedido, Integer
     Optional<ItemPedido>alterarItemPedido(Integer cdItemPedido);
     Optional<ItemPedido>deletarItemPedido(Integer cdItemPedido);
     Optional<ItemPedido>listarItemPedido(Integer cdItemPedido);
+    Optional<ItemPedido> findAllByCdItemPedido(Integer cdItemPedido);
 }
