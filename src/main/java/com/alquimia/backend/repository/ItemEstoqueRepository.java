@@ -9,6 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface ItemEstoqueRepository extends JpaRepository<ItemEstoque, Integer> {
+
+    //buscar por codigo do item estoque
+    Optional<ItemEstoque> findByCdItemEstoque(Integer cdItemEstoque);
+
     //buscar por produto
     Optional<ItemEstoque> findByCdProduto(Integer cdProduto);
 

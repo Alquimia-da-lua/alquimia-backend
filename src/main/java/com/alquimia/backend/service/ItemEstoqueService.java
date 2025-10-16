@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class  ItemEstoqueService {
+
     @Autowired
     ItemEstoqueRepository itemEstoqueRepository;
 
@@ -60,6 +61,19 @@ public class  ItemEstoqueService {
     }
 
     @Transactional(readOnly = true)
+    public ItemEstoqueResponseDTO buscarItemEstoquePorId (Integer cdItemEstoque){
+        var item = itemEstoqueRepository.findByCdItemEstoque(cdItemEstoque)
+                .orElseThrow(()-> new IllegalArgumentException("Item não encontrado"));
+
+        return new ItemEstoqueResponseDTO(
+                item.getCdItemEstoque(),
+                item.getCdProduto().getCdProduto(),
+                item.getCdEstoque().getCdEstoque(),
+                item.getQtItemEstoque()
+        );
+    }
+
+    @Transactional(readOnly = true)
     public List<ItemEstoqueResponseDTO> listarItensDoEstoque (Integer cdEstoque){
         var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
                 .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado"));
@@ -77,30 +91,30 @@ public class  ItemEstoqueService {
     }
 
     @Transactional
-    public void incrementarItem(Integer cdEstoque, Integer cdProduto, Integer qtde){
-        if (qtde < 0) throw new IllegalArgumentException("Quantidade deve ser maior que 0");
+    public void incrementarItemEstoque(Integer cdItemEstoque, Integer qtde){
+        if (qtde < 0) throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
 
-        var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
-                .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado"));
-        if(!Boolean.TRUE.equals(estoque.getIsAtivo())) throw new IllegalStateException("Estoque inativo");
-
-        var item = itemEstoqueRepository.findByCdEstoque_CdEstoqueAndCdProduto_CdProduto(cdEstoque,cdProduto)
-                .orElseThrow(()-> new IllegalArgumentException("Item nao encontrado no estoque"));
+        var item = itemEstoqueRepository.findByCdItemEstoque(cdItemEstoque)
+                .orElseThrow(()-> new IllegalArgumentException("Item não encontrado no estoque"));
 
         item.aumentarQtdeItemEstoque(qtde);
     }
 
     @Transactional
-    public void decrementarItem(Integer cdEstoque, Integer cdProduto, Integer qtde){
-        if (qtde <= 0) throw new IllegalArgumentException("Quantidade deve ser maior que zero!");
+    public void decrementarItemEstoque(Integer cdItemEstoque, Integer qtde){
+        if (qtde < 0) throw new IllegalArgumentException("Quantidade deve ser maior que zero.");
 
-        var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
-                .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado!"));
-
-        var item = itemEstoqueRepository.findByCdEstoque_CdEstoqueAndCdProduto_CdProduto(cdEstoque, cdProduto)
-                .orElseThrow(()-> new IllegalArgumentException("Item não encontrado no estoque"));
+        var item = itemEstoqueRepository.findByCdItemEstoque(cdItemEstoque)
+                .orElseThrow(()-> new IllegalArgumentException("Item não encontrado no estoque."));
 
         item.reduzirQtdeItemEstoque(qtde);
+    }
+
+    public void deletarItemEstoque(Integer cdItemEstoque){
+        var item = itemEstoqueRepository.findByCdItemEstoque(cdItemEstoque)
+                .orElseThrow(()-> new IllegalArgumentException("Item não existe no estoque"));
+
+        itemEstoqueRepository.delete(item);
     }
 
 }

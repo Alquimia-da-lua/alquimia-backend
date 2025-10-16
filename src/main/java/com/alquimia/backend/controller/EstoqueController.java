@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/estoque")
+@RequestMapping("/api/estoque")
 public class EstoqueController {
 
     @Autowired

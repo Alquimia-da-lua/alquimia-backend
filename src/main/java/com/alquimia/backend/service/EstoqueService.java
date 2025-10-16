@@ -31,6 +31,7 @@ public class EstoqueService {
         );
     }
 
+    @Transactional(readOnly = true)
     public EstoqueResponseDTO buscarEstoquePorId(Integer cdEstoque){
         var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
                 .orElseThrow(() -> new IllegalArgumentException("Estoque não encontrado!"));
