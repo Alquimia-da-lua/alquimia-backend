@@ -25,7 +25,7 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<ProdutoResponseDTO> cadastrarProduto(@RequestBody @Valid
-                                                                   ProdutoRequestDTO produto, UriComponentsBuilder uri){
+                                                                   ProdutoRequestDTO produto){
        ProdutoResponseDTO response = this.produtoService.cadastrarProduto(produto);
        return ResponseEntity
                .status(HttpStatus.CREATED)

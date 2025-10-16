@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ViaCepClient {
 
     @GetMapping("/{cep}/json")
-    ResponseEntity<ViaCepDTO> buscarPorCep(@PathVariable("cep") String cep);
+    ResponseEntity<ViaCepDTO> buscarCep(@PathVariable("cep") String cep);
 }
