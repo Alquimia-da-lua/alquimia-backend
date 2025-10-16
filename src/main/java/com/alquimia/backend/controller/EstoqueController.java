@@ -52,19 +52,19 @@ public class EstoqueController {
     }
 
     @GetMapping("/{cdEstoque}/itens")
-    public ResponseEntity<List<ItemEstoqueResponseDTO>> listarItens (@PathVariable Integer cdEstoque){
+    public ResponseEntity<List<ItemEstoqueResponseDTO>> listarItensDoEstoque (@PathVariable Integer cdEstoque){
         var resp = itemEstoqueService.listarItensDoEstoque(cdEstoque);
 
         return ResponseEntity.ok(resp);
     }
 
     @PatchMapping("/{cdEstoque}/desativar")
-    public void desativar (@PathVariable Integer cdEstoque){
+    public void desativarEstoque (@PathVariable Integer cdEstoque){
         estoqueService.desativarEstoque(cdEstoque);
     }
 
     @PatchMapping(("/{cdEstoque}/reativar"))
-    public void reativar (@PathVariable Integer cdEstoque){
+    public void reativarEstoque (@PathVariable Integer cdEstoque){
         estoqueService.reativarEstoque(cdEstoque);
     }
 
