@@ -32,7 +32,7 @@ public class Produto {
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "cd_usuario", referencedColumnName = "cdUsuario", nullable = false)
-        private Funcionario cdFuncionario;
+        private Usuario cdUsuario;
 
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
