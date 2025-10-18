@@ -17,10 +17,10 @@ public record PedidoRequestDTO(
         @NotNull(message = "Não é possível salvar um pedido sem o frete!")
         Double vlFrete,
 
-        @NotBlank(message = "Não é possível salvar um pedido sem status!")
+        @NotNull(message = "Não é possível salvar um pedido sem status!")
         StatusPedido statusPedido,
 
-        @NotBlank(message = "Não é possível salvar um pedido sem um tipo de pagamento")
+        @NotNull(message = "Não é possível salvar um pedido sem um tipo de pagamento")
         TipoPagamento tipoPagamento
 ) {
 }
