@@ -1,8 +1,8 @@
 package com.alquimia.backend.dto.response;
 
 import com.alquimia.backend.enums.CategoriaEnum;
-import com.alquimia.backend.model.Funcionario;
 import com.alquimia.backend.model.Produto;
+import com.alquimia.backend.model.Usuario;
 
 
 public record ProdutoResponseDTO(
@@ -11,7 +11,7 @@ public record ProdutoResponseDTO(
         String dsProduto,
         Double vlProduto,
         Boolean isAtivo,
-        Funcionario cdFuncionario,
+        UsuarioResponseDTO cdUsuario,
         CategoriaEnum categoria) {
 
     public ProdutoResponseDTO(Produto produto){
@@ -21,8 +21,9 @@ public record ProdutoResponseDTO(
                 produto.getDsProduto(),
                 produto.getVlProduto(),
                 produto.getIsAtivo(),
-                produto.getCategoria(),
-                new FuncionarioDTO(produto.getCdFuncionario())
+                new UsuarioResponseDTO(produto.getCdUsuario()),
+                produto.getCategoria()
+
 
         );
     }
