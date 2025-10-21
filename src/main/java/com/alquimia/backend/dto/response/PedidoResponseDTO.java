@@ -13,6 +13,6 @@ public record PedidoResponseDTO(Integer cdPedido,
     public PedidoResponseDTO(Pedido pedido){
         this(pedido.getCdPedido(),
                 pedido.getCdCliente(),
-                pedido.getItens().stream().map(ItemPedido::new).collect(Collectors.toList());
+                pedido.getItens().stream().map(ItemPedidoResponseDTO::new).collect(Collectors.toList()));
     }
 }
