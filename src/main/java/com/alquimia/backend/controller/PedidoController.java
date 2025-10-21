@@ -5,6 +5,7 @@ import com.alquimia.backend.dto.response.PedidoResponseDTO;
 import com.alquimia.backend.enums.StatusPedido;
 import com.alquimia.backend.enums.TipoPagamento;
 import com.alquimia.backend.model.Pedido;
+import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.service.PedidoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class PedidoController {
     }
 
     @GetMapping("/listar/cliente/{cdUsuario}")
-    public ResponseEntity<List<PedidoResponseDTO>> listarPedidosPorCliente(@PathVariable("cdUsuario") Integer cdUsuario) {
+    public ResponseEntity<List<PedidoResponseDTO>> listarPedidosPorCliente(@PathVariable("cdUsuario") Usuario cdUsuario) {
         var lista = pedidoService.listarPedidosPorCliente(cdUsuario);
         return ResponseEntity.status(HttpStatus.OK).body(lista);
     }
