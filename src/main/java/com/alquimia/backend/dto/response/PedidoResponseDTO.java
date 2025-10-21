@@ -12,7 +12,8 @@ public record PedidoResponseDTO(Integer cdPedido,
                                 List<ItemPedidoResponseDTO> itens) {
     public PedidoResponseDTO(Pedido pedido){
         this(pedido.getCdPedido(),
-                pedido.getCdCliente(),
+
+                pedido.getCdUsuario(),
                 pedido.getItens().stream().map(ItemPedidoResponseDTO::new).collect(Collectors.toList()));
     }
 }

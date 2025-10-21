@@ -27,6 +27,4 @@ public class ItemPedido {
     @ManyToOne
     @JoinColumn(name = "cdProduto")
     private Produto cdProduto;
-
-
 }
