@@ -1,6 +1,7 @@
 package com.alquimia.backend.repository;
 
 import com.alquimia.backend.model.ItemEstoque;
+import com.alquimia.backend.model.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ public interface ItemEstoqueRepository extends JpaRepository<ItemEstoque, Intege
     Optional<ItemEstoque> findByCdItemEstoque(Integer cdItemEstoque);
 
     //buscar por produto
-    Optional<ItemEstoque> findByCdProduto(Integer cdProduto);
+    Optional<ItemEstoque> findByCdProduto(Produto cdProduto);
 
     //todos os itens dentro de um estoque específico
     List<ItemEstoque> findByCdEstoque_CdEstoque(Integer cdEstoque);

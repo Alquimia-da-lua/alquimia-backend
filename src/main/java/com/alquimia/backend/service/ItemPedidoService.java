@@ -57,7 +57,7 @@ public class ItemPedidoService {
         Produto produto = itemPedido.getCdProduto();
         Integer cdPedidoAtual = itemPedido.getCdPedido().getCdPedido();
 
-        Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto.getCdProduto());
+        Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto);
         if (itemEstoqueOptional.isEmpty()) {
             throw new RuntimeException("Estoque não encontrado para o produto: " + produto.getCdProduto());
         }
@@ -91,7 +91,7 @@ public class ItemPedidoService {
             int qtItemPedido = itemPedido.getQtItemPedido();
             Produto produto = itemPedido.getCdProduto();
 
-            Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto.getCdProduto());
+            Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto);
 
             ItemEstoque itemEstoque = itemEstoqueOptional.get();
 
