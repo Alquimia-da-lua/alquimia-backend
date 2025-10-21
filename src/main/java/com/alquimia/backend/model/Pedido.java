@@ -34,7 +34,7 @@ public class Pedido {
     List<ItemPedido> itens;
 
     @ManyToOne
-    @JoinColumn(name = "cdCliente")
-    private Cliente cdCliente;
+    @JoinColumn(name = "cdUsuario")
+    private Usuario cdUsuario;
 
 }
