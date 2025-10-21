@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "itemPedido")
+@Entity
 public class ItemPedido {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,4 @@ public class ItemPedido {
     @ManyToOne
     @JoinColumn(name = "cdProduto")
     private Produto cdProduto;
-
-
 }
