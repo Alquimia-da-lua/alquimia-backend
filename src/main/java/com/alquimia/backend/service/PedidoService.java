@@ -6,6 +6,7 @@ import com.alquimia.backend.enums.StatusPedido;
 import com.alquimia.backend.enums.TipoPagamento;
 import com.alquimia.backend.model.ItemPedido;
 import com.alquimia.backend.model.Pedido;
+import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.repository.ItemPedidoRepository;
 import com.alquimia.backend.repository.PedidoRepository;
 import com.alquimia.backend.repository.ProdutoRepository;
@@ -62,7 +63,7 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
-    public List<PedidoResponseDTO> listarPedidosPorCliente(Integer cdUsuario) {
+    public List<PedidoResponseDTO> listarPedidosPorCliente(Usuario cdUsuario) {
         List<Pedido> pedidos = pedidoRepository.findAllByCdUsuario(cdUsuario);
 
         if (pedidos.isEmpty()) {
