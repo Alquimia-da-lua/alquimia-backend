@@ -31,6 +31,7 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private TipoPagamento tipoPagamento;
 
+    @OneToMany
     List<ItemPedido> itens;
 
     @ManyToOne
