@@ -27,7 +27,7 @@ public class Produto {
         @Column(nullable = false)
         private Double vlProduto;
 
-        @Column(columnDefinition = "boolean default true")
+        @Column(columnDefinition = "boolean default true", nullable = false)
         private Boolean isAtivo;
 
         @ManyToOne(fetch = FetchType.LAZY)
