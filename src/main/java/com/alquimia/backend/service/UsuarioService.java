@@ -9,7 +9,6 @@ import com.alquimia.backend.enums.RoleUsuario;
 import com.alquimia.backend.exception.DadoDuplicadoException;
 import com.alquimia.backend.exception.UsuarioNaoEncontradoException;
 import com.alquimia.backend.model.Cliente;
-import com.alquimia.backend.model.Funcionario;
 import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
@@ -42,21 +41,12 @@ public class UsuarioService {
 
         Usuario usuario;
 
-        // criação de usuário dependendo da role, talvez retirar a funcao de cadastrar funcionario por aqui no futuro
-        if (requestDto.roleUsuario() == RoleUsuario.CLIENTE) {
-            Cliente cliente = new Cliente();
-            BeanUtils.copyProperties(requestDto, cliente);
+        // criação de usuário (somente cliente)
+        Cliente cliente = new Cliente();
+        BeanUtils.copyProperties(requestDto, cliente);
+        cliente.setRoleUsuario(RoleUsuario.CLIENTE);
+        usuario = clienteService.cadastrarCliente(cliente);
 
-            usuario = clienteService.cadastrarCliente(cliente);
-
-        } else if (requestDto.roleUsuario() == RoleUsuario.FUNCIONARIO) {
-            Funcionario funcionario = new Funcionario();
-            BeanUtils.copyProperties(requestDto, funcionario);
-
-            usuario = funcionarioService.cadastrarFuncionario(funcionario);
-        } else {
-            throw new DadoDuplicadoException("Role inválida");
-        }
         return new UsuarioResponseDTO(usuario);
     }
 
