@@ -37,7 +37,7 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public ResponseEntity<EnderecoResponseDTO> cadastrarProduto(@RequestBody@Valid EnderecoRequestDTO endereco) throws CepNaoEncontradoException {
+    public ResponseEntity<EnderecoResponseDTO> cadastrarEndereco(@RequestBody@Valid EnderecoRequestDTO endereco) throws CepNaoEncontradoException {
         EnderecoResponseDTO response = this.enderecoService.cadastrarEndereco(endereco);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -48,7 +48,7 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PutMapping("/alterar/{cdProduto}")
+    @PutMapping("/alterar/{cdEndereco}")
     public ResponseEntity<EnderecoResponseDTO> alterarEndereco(@PathVariable("cdEndereco") Integer cdEndereco,
                                                                @RequestBody@Valid EnderecoRequestDTO enderecoDTO) throws CepNaoEncontradoException {
         var response = enderecoService.alterarEndereco(cdEndereco, enderecoDTO);

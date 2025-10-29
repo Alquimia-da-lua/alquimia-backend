@@ -82,15 +82,16 @@ public class EstoqueService {
                 )).toList();
     }
 
+    @Transactional
     public void desativarEstoque(Integer cdEstoque){
-        var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
+        var estoque = this.estoqueRepository.findByCdEstoque(cdEstoque)
                 .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado"));
-
         estoque.setIsAtivo(false); //soft delete
     }
 
+    @Transactional
     public void reativarEstoque(Integer cdEstoque){
-        var estoque = estoqueRepository.findByCdEstoque(cdEstoque)
+        var estoque = this.estoqueRepository.findByCdEstoque(cdEstoque)
                 .orElseThrow(()-> new IllegalArgumentException("Estoque não encontrado"));
 
         estoque.setIsAtivo(true);

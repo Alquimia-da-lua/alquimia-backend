@@ -17,7 +17,7 @@ public class Estoque {
     private Integer cdEstoque;
 
     @Column(nullable = false)
-    private Boolean isAtivo = true;
+    private Boolean isAtivo;
 
     @OneToMany(
             mappedBy = "cdEstoque", //cdEstoque do itemEstoque
@@ -30,6 +30,12 @@ public class Estoque {
     public void prePersist(){
         if (isAtivo==null) isAtivo = true;
     }
+
+    @OneToMany(
+            mappedBy = "cdPedido",
+            orphanRemoval = true
+    )
+    private List<Pedido> pedidos = new ArrayList<>();
 
     //mantendo lados sincronizados
     public void adicionarItem (ItemEstoque item){

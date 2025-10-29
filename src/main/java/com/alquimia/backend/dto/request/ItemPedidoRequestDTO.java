@@ -6,12 +6,10 @@ import jakarta.validation.constraints.NotNull;
 
 public record ItemPedidoRequestDTO(
         @NotNull (message = "Não é possível salvar um item do pedido sem o código do pedido!")
-        Pedido cdPedido,
+        Integer cdPedido,
 
         @NotNull(message = "Não é possível salvar um item do pedido sem o código do produto!")
-        Produto cdProduto,
-
-        @NotNull(message = "Não é possível salvar um item do pedido sem o valor!")
+        Integer cdProduto,
         Double vlItemPedido,
 
         @NotNull(message = "Não é possível salvar um item do pedido sem a quantidade!")

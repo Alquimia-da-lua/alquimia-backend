@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("api/itempedido")
+@RequestMapping("/api/itempedido")
 public class ItemPedidoController {
 
     private final ItemPedidoService itemPedidoService;
@@ -26,14 +26,14 @@ public class ItemPedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemPedido> cadastrarItemPedido(@RequestBody @Valid ItemPedidoRequestDTO itemPedidoDTO) {
+    public ResponseEntity<ItemPedidoResponseDTO> cadastrarItemPedido(@RequestBody @Valid ItemPedidoRequestDTO itemPedidoDTO) {
 
-        ItemPedido novoItem = this.itemPedidoService.cadastrarItemPedido(itemPedidoDTO);
-        pedidoService.atualizarValorPedido(novoItem.getCdPedido().getCdPedido());
+        ItemPedidoResponseDTO response = this.itemPedidoService.cadastrarItemPedido(itemPedidoDTO);
+        pedidoService.atualizarValorPedido(response.cdPedido());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(novoItem);
+                .body(response);
     }
 
     @GetMapping("/listar")
