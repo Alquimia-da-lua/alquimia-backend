@@ -33,6 +33,7 @@ public class Usuario {
     @Column(nullable = false)
     private String nuTelefone;
 
+    @Column(columnDefinition = "boolean default true")
     private boolean isAtivo;
 
     @Column(unique = true)

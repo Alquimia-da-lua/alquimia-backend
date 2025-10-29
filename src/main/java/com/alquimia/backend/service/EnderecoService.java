@@ -33,7 +33,7 @@ public class EnderecoService {
         if(endereco.cep() == null){
             throw new CepNaoEncontradoException(enderecoDTO.nuCep());
         } else {
-            novo.setNuCep(endereco.cep());
+            novo.setNuCep(endereco.cep().replace("-", ""));
             novo.setDsBairro(endereco.bairro());
             novo.setDsLogradouro(endereco.logradouro());
             novo.setDsLocalidade(endereco.localidade());

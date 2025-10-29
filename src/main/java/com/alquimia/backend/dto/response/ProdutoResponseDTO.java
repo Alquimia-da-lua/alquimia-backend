@@ -20,7 +20,7 @@ public record ProdutoResponseDTO(
                 produto.getNmProduto(),
                 produto.getDsProduto(),
                 produto.getVlProduto(),
-                produto.isAtivo(),
+                produto.getIsAtivo(),
                 new UsuarioResponseDTO(produto.getCdUsuario()),
                 produto.getCategoria()
 

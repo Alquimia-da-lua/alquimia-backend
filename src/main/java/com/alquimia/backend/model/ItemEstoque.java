@@ -26,13 +26,13 @@ public class ItemEstoque {
     @Column(nullable = false)
     private Integer qtItemEstoque = 0;
 
-    public void aumentarQtdeItemEstoque(int qtde){
+    public void aumentarQtdeItemEstoque(Integer qtde){
         if (qtde < 0) throw new IllegalArgumentException("Quantidade negativa!");
 
         this.qtItemEstoque += qtde;
     }
 
-    public void reduzirQtdeItemEstoque(int qtde){
+    public void reduzirQtdeItemEstoque(Integer qtde){
         if (qtde < 0) throw new IllegalArgumentException("Quantidade negativa.");
 
         int restante = this.qtItemEstoque - qtde;

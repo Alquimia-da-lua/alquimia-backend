@@ -28,7 +28,7 @@ public class ProdutoService {
 
     @Transactional
     public ProdutoResponseDTO cadastrarProduto(ProdutoRequestDTO produtoDto) {
-        var usuario = usuarioRepository.findByCdUsuario(produtoDto.cdUsuario()).orElseThrow(UsuarioNaoEncontradoException::new);;
+        var usuario = usuarioRepository.findByCdUsuario(produtoDto.cdUsuario()).orElseThrow(UsuarioNaoEncontradoException::new);
         var produto = new Produto();
         produto.setNmProduto(produtoDto.nmProduto());
         produto.setDsProduto(produtoDto.dsProduto());

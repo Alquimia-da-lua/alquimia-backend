@@ -28,7 +28,7 @@ public class Produto {
         private Double vlProduto;
 
         @Column(columnDefinition = "boolean default true")
-        private boolean isAtivo;
+        private Boolean isAtivo;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "cd_usuario", referencedColumnName = "cdUsuario", nullable = false)
@@ -37,6 +37,11 @@ public class Produto {
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
         private CategoriaEnum categoria;
+
+        @PrePersist
+        public void prePersist(){
+                if (isAtivo==null) isAtivo = true;
+        }
 
         public void marcarComoDeletado(){
                 this.isAtivo = false;

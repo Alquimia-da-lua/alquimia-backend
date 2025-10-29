@@ -1,5 +1,6 @@
 package com.alquimia.backend.repository;
 
+import com.alquimia.backend.model.Estoque;
 import com.alquimia.backend.model.Pedido;
 import com.alquimia.backend.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -2,11 +2,13 @@ package com.alquimia.backend.model;
 
 import com.alquimia.backend.enums.StatusPedido;
 import com.alquimia.backend.enums.TipoPagamento;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,8 +33,12 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private TipoPagamento tipoPagamento;
 
-    @OneToMany
-    List<ItemPedido> itens;
+    @OneToMany(
+            mappedBy = "cdPedido",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    List<ItemPedido> itens = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "cdUsuario")

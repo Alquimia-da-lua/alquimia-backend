@@ -1,5 +1,6 @@
 package com.alquimia.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,11 +22,13 @@ public class ItemPedido {
     @Column(nullable = false)
     private Integer qtItemPedido;
 
-    @ManyToOne
-    @JoinColumn(name = "cdPedido")
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cdPedido", nullable = false)
     private Pedido cdPedido;
 
-    @ManyToOne
-    @JoinColumn(name = "cdProduto")
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cdProduto", nullable = false)
     private Produto cdProduto;
 }
