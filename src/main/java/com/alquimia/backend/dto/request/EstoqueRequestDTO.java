@@ -1,7 +1,5 @@
 package com.alquimia.backend.dto.request;
 
-import com.alquimia.backend.model.ItemEstoque;
-import jakarta.persistence.Column;
 
 import java.util.List;
 

@@ -13,6 +13,8 @@ public record ProdutoRequestDTO(
 
         @NotNull Double vlProduto,
 
+        @NotNull Integer cdUsuario,
+
         @NotNull(message = "Deve ser preenchida uma categoria")
         CategoriaEnum categoria) {
 }

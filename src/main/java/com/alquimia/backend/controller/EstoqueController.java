@@ -60,12 +60,12 @@ public class EstoqueController {
 
     @PatchMapping("/{cdEstoque}/desativar")
     public void desativarEstoque (@PathVariable Integer cdEstoque){
-        estoqueService.desativarEstoque(cdEstoque);
+        this.estoqueService.desativarEstoque(cdEstoque);
     }
 
     @PatchMapping(("/{cdEstoque}/reativar"))
     public void reativarEstoque (@PathVariable Integer cdEstoque){
-        estoqueService.reativarEstoque(cdEstoque);
+        this.estoqueService.reativarEstoque(cdEstoque);
     }
 
 }

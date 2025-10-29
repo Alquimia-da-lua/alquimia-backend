@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cdUsuario;
 
     @Column(nullable = false)
@@ -33,6 +33,7 @@ public class Usuario {
     @Column(nullable = false)
     private String nuTelefone;
 
+    @Column(columnDefinition = "boolean default true")
     private boolean isAtivo;
 
     @Column(unique = true)

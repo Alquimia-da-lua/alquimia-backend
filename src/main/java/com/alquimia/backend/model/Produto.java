@@ -38,6 +38,11 @@ public class Produto {
         @Column(nullable = false)
         private CategoriaEnum categoria;
 
+        @PrePersist
+        public void prePersist(){
+                if (isAtivo==null) isAtivo = true;
+        }
+
         public void marcarComoDeletado(){
                 this.isAtivo = false;
         }

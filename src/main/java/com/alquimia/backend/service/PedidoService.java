@@ -2,13 +2,15 @@ package com.alquimia.backend.service;
 
 import com.alquimia.backend.dto.request.PedidoRequestDTO;
 import com.alquimia.backend.dto.response.PedidoResponseDTO;
+import com.alquimia.backend.dto.response.ProdutoResponseDTO;
 import com.alquimia.backend.enums.StatusPedido;
 import com.alquimia.backend.enums.TipoPagamento;
+import com.alquimia.backend.exception.ProdutoNaoEncontradoException;
+import com.alquimia.backend.exception.UsuarioNaoEncontradoException;
 import com.alquimia.backend.model.ItemPedido;
 import com.alquimia.backend.model.Pedido;
-import com.alquimia.backend.repository.ItemPedidoRepository;
-import com.alquimia.backend.repository.PedidoRepository;
-import com.alquimia.backend.repository.ProdutoRepository;
+import com.alquimia.backend.model.Usuario;
+import com.alquimia.backend.repository.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,21 +30,27 @@ public class PedidoService {
     private ItemPedidoRepository itemPedidoRepository;
 
     @Autowired
-    private ProdutoRepository produtoRepository;
-
-    @Autowired
     private ItemPedidoService itemPedidoService;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+
+
     @Transactional
-    public Pedido cadastrarPedido(PedidoRequestDTO pedidoRequestDTO) {
+    public PedidoResponseDTO cadastrarPedido(PedidoRequestDTO pedidoRequestDTO) {
         var pedido = new Pedido();
+        var usuario = usuarioRepository.findByCdUsuario(pedidoRequestDTO.cdUsuario()).orElseThrow(UsuarioNaoEncontradoException::new);
         BeanUtils.copyProperties(pedidoRequestDTO, pedido);
-        return pedidoRepository.save(pedido);
+        pedido.setCdUsuario(usuario);
+        pedido.setStatusPedido(StatusPedido.EM_ANALISE);
+        return new PedidoResponseDTO(pedidoRepository.save(pedido));
     }
 
     @Transactional
-    public Pedido atualizarValorPedido(Integer cdPedido) {
-        Pedido pedido = buscarPedidoCd(cdPedido);
+    public PedidoResponseDTO atualizarValorPedido(Integer cdPedido) {
+        Pedido pedido = this.pedidoRepository.findByCdPedido(cdPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado com o código: " + cdPedido));
 
         List<ItemPedido> itens = itemPedidoRepository.findAllByCdPedido(pedido);
         double novoValorItens = itens.stream()
@@ -50,19 +58,29 @@ public class PedidoService {
                 .sum();
 
         pedido.setVlPedido(novoValorItens + pedido.getVlFrete());
-        return pedidoRepository.save(pedido);
+        return new PedidoResponseDTO(pedidoRepository.save(pedido));
     }
 
-    public Pedido buscarPedidoCd(Integer cdPedido){
-        return pedidoRepository.findByCdPedido(cdPedido)
-                .orElseThrow(()-> new RuntimeException("Pedido não encontrado com o código: " + cdPedido));
+    @Transactional
+    public PedidoResponseDTO buscarPedidoCd(Integer cdPedido){
+        return this.pedidoRepository.findByCdPedido(cdPedido)
+                .map(PedidoResponseDTO::new)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado com o código: " + cdPedido));
+
     }
 
-    public List<Pedido> listarPedidos(){
-        return pedidoRepository.findAll();
+    @Transactional
+    public List<PedidoResponseDTO> listarPedidos(){
+        List<PedidoResponseDTO> pedidos = new ArrayList<>();
+        List<Pedido> model = this.pedidoRepository.findAll();
+        for (Pedido pedido : model) {
+            pedidos.add(new PedidoResponseDTO(pedido));
+        }
+        return pedidos;
     }
 
-    public List<PedidoResponseDTO> listarPedidosPorCliente(Integer cdUsuario) {
+    @Transactional
+    public List<PedidoResponseDTO> listarPedidosPorCliente(Usuario cdUsuario) {
         List<Pedido> pedidos = pedidoRepository.findAllByCdUsuario(cdUsuario);
 
         if (pedidos.isEmpty()) {
@@ -74,9 +92,10 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido alterarStatusPedido(Integer cdPedido, StatusPedido statusPedido) {
+    public PedidoResponseDTO alterarStatusPedido(Integer cdPedido, StatusPedido statusPedido) {
+        Pedido pedido = this.pedidoRepository.findByCdPedido(cdPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado com o código: " + cdPedido));
 
-        Pedido pedido = buscarPedidoCd(cdPedido);
 
         StatusPedido statusAtual = pedido.getStatusPedido();
 
@@ -95,13 +114,14 @@ public class PedidoService {
             pedido.setVlFrete(0.0);
         }
         pedido.setStatusPedido(statusPedido);
-        return pedidoRepository.save(pedido);
+        return new PedidoResponseDTO(pedidoRepository.save(pedido)) ;
     }
 
     @Transactional
-    public Pedido alterarTipoPagamento(Integer cdPedido, TipoPagamento novoTipoPagamento) {
+    public PedidoResponseDTO alterarTipoPagamento(Integer cdPedido, TipoPagamento novoTipoPagamento) {
+        Pedido pedido = this.pedidoRepository.findByCdPedido(cdPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado com o código: " + cdPedido));
 
-        Pedido pedido = buscarPedidoCd(cdPedido);
         StatusPedido statusAtual = pedido.getStatusPedido();
 
         if (statusAtual == StatusPedido.CANCELADO || statusAtual == StatusPedido.ENTREGUE) {
@@ -109,7 +129,7 @@ public class PedidoService {
         }
 
         pedido.setTipoPagamento(novoTipoPagamento);
-        return pedidoRepository.save(pedido);
+        return new PedidoResponseDTO(pedidoRepository.save(pedido));
     }
 
 }

@@ -33,18 +33,18 @@ public class ItemEstoqueController {
         return ResponseEntity.ok(resp);
     }
 
-    @PatchMapping("/{cdItemPedido}/adicionar-quantidade")
-    public ResponseEntity<Void> adicionarQuantidadeItemEstoque(@PathVariable Integer cdItemEstoque,
-                                                    @RequestParam Integer qtde){
+    @PatchMapping("/{cdItemEstoque}/adicionar-quantidade")
+    public ResponseEntity<Void> adicionarQuantidadeItemEstoque(@PathVariable("cdItemEstoque") Integer cdItemEstoque,
+                                                               @RequestParam Integer qtde){
         itemEstoqueService.incrementarItemEstoque(cdItemEstoque, qtde);
 
         return ResponseEntity.status(200).build();
 
     }
 
-    @PatchMapping("/{cdItemPedido}/diminuir-quantidade")
+    @PatchMapping("/{cdItemEstoque}/diminuir-quantidade")
     public ResponseEntity<Void> diminuirQuantidadeItemEstoque(@PathVariable Integer cdItemEstoque,
-                                                   @RequestParam Integer qtde){
+                                                              @RequestParam Integer qtde){
         itemEstoqueService.decrementarItemEstoque(cdItemEstoque, qtde);
 
         return ResponseEntity.status(200).build();

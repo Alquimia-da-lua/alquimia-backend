@@ -2,7 +2,9 @@ package com.alquimia.backend.service;
 
 import com.alquimia.backend.dto.request.ProdutoRequestDTO;
 import com.alquimia.backend.dto.response.ProdutoResponseDTO;
+import com.alquimia.backend.exception.EnderecoNaoEncontradoException;
 import com.alquimia.backend.exception.ProdutoNaoEncontradoException;
+import com.alquimia.backend.exception.UsuarioNaoEncontradoException;
 import com.alquimia.backend.model.Produto;
 import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.repository.ProdutoRepository;
@@ -21,12 +23,18 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Transactional
     public ProdutoResponseDTO cadastrarProduto(ProdutoRequestDTO produtoDto) {
+        var usuario = usuarioRepository.findByCdUsuario(produtoDto.cdUsuario()).orElseThrow(UsuarioNaoEncontradoException::new);
         var produto = new Produto();
-        BeanUtils.copyProperties(produtoDto, produto);
+        produto.setNmProduto(produtoDto.nmProduto());
+        produto.setDsProduto(produtoDto.dsProduto());
+        produto.setVlProduto(produtoDto.vlProduto());
+        produto.setCategoria(produtoDto.categoria());
+        produto.setCdUsuario(usuario);
         return new ProdutoResponseDTO(produtoRepository.save(produto));
     }
 

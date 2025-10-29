@@ -1,6 +1,7 @@
 package com.alquimia.backend.service;
 
 import com.alquimia.backend.dto.request.ItemPedidoRequestDTO;
+import com.alquimia.backend.dto.response.ItemEstoqueResponseDTO;
 import com.alquimia.backend.dto.response.ItemPedidoResponseDTO;
 import com.alquimia.backend.model.ItemEstoque;
 import com.alquimia.backend.model.ItemPedido;
@@ -8,6 +9,7 @@ import com.alquimia.backend.model.Pedido;
 import com.alquimia.backend.model.Produto;
 import com.alquimia.backend.repository.ItemEstoqueRepository;
 import com.alquimia.backend.repository.ItemPedidoRepository;
+import com.alquimia.backend.repository.PedidoRepository;
 import com.alquimia.backend.repository.ProdutoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,26 +28,40 @@ public class ItemPedidoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
     @Autowired
     private ItemEstoqueRepository itemEstoqueRepository;
 
-    private ItemEstoque itemEstoque;
+
 
     @Transactional
-    public ItemPedido cadastrarItemPedido(ItemPedidoRequestDTO itemPedidoRequestDTO) {
+    public ItemPedidoResponseDTO cadastrarItemPedido(ItemPedidoRequestDTO itemPedidoRequestDTO) {
+        Pedido pedido = pedidoRepository.findByCdPedido(itemPedidoRequestDTO.cdPedido())
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado com código: "
+                + itemPedidoRequestDTO.cdPedido()));
 
-        Produto produtoDoDTO = itemPedidoRequestDTO.cdProduto();
-        Produto produto = produtoRepository.findByCdProduto(produtoDoDTO.getCdProduto())
+      ;
+        Produto produto = produtoRepository.findByCdProduto(itemPedidoRequestDTO.cdProduto())
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado com código: "
-                + produtoDoDTO.getCdProduto()));
+                + itemPedidoRequestDTO.cdProduto()));
+
+        ItemEstoque itemEstoque = itemEstoqueRepository.findByCdProduto(produto).orElseThrow(() -> new RuntimeException("Produto não encontrado com código: "
+                + itemPedidoRequestDTO.cdProduto()));;
 
         int qtItemPedido = itemPedidoRequestDTO.qtItemPedido();
+
         itemEstoque.reduzirQtdeItemEstoque(qtItemPedido);
 
         var itemPedido = new ItemPedido();
         BeanUtils.copyProperties(itemPedidoRequestDTO, itemPedido);
         itemPedido.setCdProduto(produto);
-        return itemPedidoRepository.save(itemPedido);
+        itemPedido.setVlItemPedido(produto.getVlProduto());
+        itemPedido.setCdPedido(pedido);
+//        pedido.getItens().add(itemPedido);
+        return new ItemPedidoResponseDTO(itemPedidoRepository.save(itemPedido)) ;
     }
 
     @Transactional
@@ -57,11 +73,10 @@ public class ItemPedidoService {
         Produto produto = itemPedido.getCdProduto();
         Integer cdPedidoAtual = itemPedido.getCdPedido().getCdPedido();
 
-        Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto.getCdProduto());
+        Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto);
         if (itemEstoqueOptional.isEmpty()) {
             throw new RuntimeException("Estoque não encontrado para o produto: " + produto.getCdProduto());
         }
-
         ItemEstoque itemEstoque = itemEstoqueOptional.get();
         itemEstoque.setQtItemEstoque(itemEstoque.getQtItemEstoque() + qtItemPedido);
         itemEstoqueRepository.save(itemEstoque);
@@ -91,7 +106,7 @@ public class ItemPedidoService {
             int qtItemPedido = itemPedido.getQtItemPedido();
             Produto produto = itemPedido.getCdProduto();
 
-            Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto.getCdProduto());
+            Optional<ItemEstoque> itemEstoqueOptional = itemEstoqueRepository.findByCdProduto(produto);
 
             ItemEstoque itemEstoque = itemEstoqueOptional.get();
 
