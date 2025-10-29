@@ -9,9 +9,7 @@ public record LoginRequestDTO(
         @Email
         String emailUsuario,
 
-        @Size(min = 6, message = "Senha não pode ser menor que 6 caracteres")
-        String senhaUsuario,
-
-        String token
+        @Size(min = 8, message = "Senha não pode ser menor que 8 caracteres")
+        String senhaUsuario
 ) {
 }

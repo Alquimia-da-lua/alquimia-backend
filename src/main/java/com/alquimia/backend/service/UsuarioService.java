@@ -22,12 +22,10 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final ClienteService clienteService;
-    private final FuncionarioService funcionarioService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ClienteService clienteService, FuncionarioService funcionarioService) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ClienteService clienteService) {
         this.clienteService = clienteService;
         this.usuarioRepository = usuarioRepository;
-        this.funcionarioService = funcionarioService;
     }
 
     public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO requestDto){
@@ -73,7 +71,15 @@ public class UsuarioService {
         var usuario = usuarioRepository.findByEmailUsuario(loginDto.emailUsuario())
                 .orElseThrow(UsuarioNaoEncontradoException::new);
 
-        return new LoginResponseDTO("");
+        String token = "aaaa";
+
+        return new LoginResponseDTO(
+                usuario.getNmUsuario(),
+                usuario.getEmailUsuario(),
+                usuario.getNuTelefone(),
+                usuario.getRoleUsuario(),
+                token
+        );
     }
 
     public UsuarioResponseDTO atualizarUsuario(AtualizarUsuarioRequestDTO requestDto, Integer cdUsuario){
