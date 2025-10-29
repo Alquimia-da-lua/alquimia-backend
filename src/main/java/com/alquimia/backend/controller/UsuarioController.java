@@ -18,27 +18,27 @@ import java.util.List;
 @RequestMapping("/api/usuario")
 public class UsuarioController {
 
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioDto){
         UsuarioResponseDTO novoUsuario = usuarioService.cadastrarUsuario(usuarioDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
-    @GetMapping("/{cdUsuario}")
+    @GetMapping("/buscar/{cdUsuario}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable("cdUsuario") int cdUsuario){
         var usuario = usuarioService.buscarUsuario(cdUsuario);
 
         return ResponseEntity.status(HttpStatus.OK).body(usuario);
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios(){
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
@@ -47,12 +47,12 @@ public class UsuarioController {
     // funcao incompleta, esperar pelo jwt
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginDto){
-        var usuario = usuarioService.login(loginDto);
+        LoginResponseDTO login = usuarioService.login(loginDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDTO(""));
+        return ResponseEntity.status(HttpStatus.OK).body(login);
     }
 
-    @PutMapping("/{cdUsuario}")
+    @PutMapping("/atualizar/{cdUsuario}")
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable("cdUsuario") int cdUsuario,
                                                                @RequestBody @Valid AtualizarUsuarioRequestDTO usuarioDto) {
 
@@ -61,14 +61,14 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioAtualizado);
     }
 
-    @DeleteMapping("/{cdUsuario}")
+    @PutMapping("/deletar/{cdUsuario}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable("cdUsuario") int cdUsuario){
         usuarioService.deletarUsuario(cdUsuario);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/ativos")
+    @GetMapping("/listar/ativos")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosAtivos(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuariosAtivos());
     }
