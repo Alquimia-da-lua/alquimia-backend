@@ -60,7 +60,7 @@ public class ProdutoService {
     public List<ProdutoResponseDTO> listarProdutosAtivos() {
         List<ProdutoResponseDTO> produtos = new ArrayList<>();
 
-        List<Produto> model = this.produtoRepository.findAllByIsAtivoTrue().stream().toList();
+        List<Produto> model = this.produtoRepository.findAllByIsAtivoTrue();
         for (Produto produto : model) {
             produtos.add(new ProdutoResponseDTO(produto));
         }
