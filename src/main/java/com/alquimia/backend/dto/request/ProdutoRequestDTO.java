@@ -16,5 +16,7 @@ public record ProdutoRequestDTO(
         @NotNull Integer cdUsuario,
 
         @NotNull(message = "Deve ser preenchida uma categoria")
-        CategoriaEnum categoria) {
+        CategoriaEnum categoria,
+
+        String imagem) {
 }
