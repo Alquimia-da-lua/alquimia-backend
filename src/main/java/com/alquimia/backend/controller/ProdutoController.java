@@ -32,7 +32,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<ProdutoResponseDTO>> listarProdutos(Produto produto){
+    public ResponseEntity<List<ProdutoResponseDTO>> listarProdutos(){
         var lista = produtoService.listarProdutos();
         return ResponseEntity.status(HttpStatus.OK).body(lista);
     }
@@ -44,7 +44,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/listar/ativos")
-    public ResponseEntity<List<ProdutoResponseDTO>> listarProdutosAtivos(Produto produto){
+    public ResponseEntity<List<ProdutoResponseDTO>> listarProdutosAtivos(){
         var lista = produtoService.listarProdutosAtivos();
         return ResponseEntity.status(HttpStatus.OK).body(lista);
     }
