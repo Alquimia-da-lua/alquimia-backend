@@ -34,6 +34,7 @@ public class ProdutoService {
         produto.setDsProduto(produtoDto.dsProduto());
         produto.setVlProduto(produtoDto.vlProduto());
         produto.setCategoria(produtoDto.categoria());
+        produto.setImagem(produtoDto.imagem());
         produto.setCdUsuario(usuario);
         return new ProdutoResponseDTO(produtoRepository.save(produto));
     }
