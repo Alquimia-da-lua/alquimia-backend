@@ -1,6 +1,9 @@
 package com.alquimia.backend.dto.request;
 
+import com.alquimia.backend.model.Endereco;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record AtualizarUsuarioRequestDTO(
@@ -12,13 +15,16 @@ public record AtualizarUsuarioRequestDTO(
         @Email(message = "Email inválido")
         String emailUsuario,
 
-        @Size(min = 6, message = "Senha do usuário não pode ser menor que 6 caracteres")
+        @Size(min = 8, message = "Senha do usuário não pode ser menor que 6 caracteres")
         String senhaUsuario,
 
         @Size(min = 10, max = 11, message = "Telefone do usuário deve conter entre 10 e 11 dígitos")
         String nuTelefone,
 
         @Size(min = 11, max = 11, message = "CPF do usuário deve conter 11 dígitos")
-        String nuCpf
+        String nuCpf,
+
+        @NotBlank
+        Endereco endereco
 ) {
 }
