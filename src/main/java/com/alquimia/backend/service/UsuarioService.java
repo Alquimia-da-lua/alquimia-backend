@@ -1,11 +1,14 @@
 package com.alquimia.backend.service;
 
 import com.alquimia.backend.dto.request.AtualizarUsuarioRequestDTO;
+import com.alquimia.backend.dto.request.EnderecoRequestDTO;
 import com.alquimia.backend.dto.request.LoginRequestDTO;
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
+import com.alquimia.backend.dto.response.ClienteResponseDTO;
 import com.alquimia.backend.dto.response.LoginResponseDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.enums.RoleUsuario;
+import com.alquimia.backend.exception.CepNaoEncontradoException;
 import com.alquimia.backend.exception.DadoDuplicadoException;
 import com.alquimia.backend.exception.UsuarioNaoEncontradoException;
 import com.alquimia.backend.model.Cliente;
@@ -134,4 +137,17 @@ public class UsuarioService {
         }
         return usuarios;
     }
+
+    public ClienteResponseDTO cadastrarEnderecoNoCliente(Integer cdUsuario, EnderecoRequestDTO enderecoDto) throws CepNaoEncontradoException {
+        Usuario usuario = usuarioRepository.findByCdUsuario(cdUsuario)
+                .orElseThrow(UsuarioNaoEncontradoException::new);
+
+        if (!usuario.getRoleUsuario().equals(RoleUsuario.CLIENTE)) {
+            throw new IllegalArgumentException("Usuário não é um cliente");
+        }
+
+        Cliente cliente = (Cliente) usuario;
+        return clienteService.cadastrarEndereco(cliente.getCdUsuario(), enderecoDto);
+    }
+
 }
