@@ -39,6 +39,7 @@ public class EnderecoService {
             novo.setDsLocalidade(endereco.localidade());
             novo.setNmEstado(endereco.uf());
             novo.setDsComplemento(enderecoDTO.dsComplemento());
+            BeanUtils.copyProperties(enderecoDTO, endereco);
             enderecoRepository.save(novo);
             return new EnderecoResponseDTO(novo);
         }
