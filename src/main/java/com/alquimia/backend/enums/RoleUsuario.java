@@ -1,16 +1,15 @@
 package com.alquimia.backend.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum RoleUsuario {
     CLIENTE("cliente"),
     FUNCIONARIO("funcionario");
 
-    private String roleUsuario;
+    private final String roleUsuario;
 
     RoleUsuario(String roleUsuario) {
         this.roleUsuario = roleUsuario;
-    }
-
-    public String getRoleUsuario() {
-        return roleUsuario;
     }
 }

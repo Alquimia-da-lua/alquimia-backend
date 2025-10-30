@@ -24,13 +24,6 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioDto){
-        UsuarioResponseDTO novoUsuario = usuarioService.cadastrarUsuario(usuarioDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
-    }
-
     @GetMapping("/buscar/{cdUsuario}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable("cdUsuario") int cdUsuario){
         var usuario = usuarioService.buscarUsuario(cdUsuario);
@@ -42,14 +35,6 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios(){
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
-    }
-
-    // funcao incompleta, esperar pelo jwt
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginDto){
-        LoginResponseDTO login = usuarioService.login(loginDto);
-
-        return ResponseEntity.status(HttpStatus.OK).body(login);
     }
 
     @PutMapping("/atualizar/{cdUsuario}")

@@ -12,13 +12,17 @@ import com.alquimia.backend.model.Cliente;
 import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
     private final ClienteService clienteService;
@@ -42,6 +46,8 @@ public class UsuarioService {
         // criação de usuário (somente cliente)
         Cliente cliente = new Cliente();
         BeanUtils.copyProperties(requestDto, cliente);
+
+        cliente.setSenhaUsuario(new BCryptPasswordEncoder().encode(requestDto.senhaUsuario()));
         cliente.setRoleUsuario(RoleUsuario.CLIENTE);
         usuario = clienteService.cadastrarCliente(cliente);
 
@@ -64,22 +70,6 @@ public class UsuarioService {
         }
 
         return usuarios;
-    }
-
-    // funcao incompleta, esperar pelo jwt
-    public LoginResponseDTO login(LoginRequestDTO loginDto){
-        var usuario = usuarioRepository.findByEmailUsuario(loginDto.emailUsuario())
-                .orElseThrow(UsuarioNaoEncontradoException::new);
-
-        String token = "aaaa";
-
-        return new LoginResponseDTO(
-                usuario.getNmUsuario(),
-                usuario.getEmailUsuario(),
-                usuario.getNuTelefone(),
-                usuario.getRoleUsuario(),
-                token
-        );
     }
 
     public UsuarioResponseDTO atualizarUsuario(AtualizarUsuarioRequestDTO requestDto, Integer cdUsuario){
@@ -133,5 +123,11 @@ public class UsuarioService {
             usuarios.add(new UsuarioResponseDTO(usuario));
         }
         return usuarios;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return usuarioRepository.findByEmailUsuario(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o email: " + username));
     }
 }
