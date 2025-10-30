@@ -38,6 +38,10 @@ public class Produto {
         @Column(nullable = false)
         private CategoriaEnum categoria;
 
+        @Column
+        private String imagem;
+
+
         @PrePersist
         public void prePersist(){
                 if (isAtivo==null) isAtivo = true;

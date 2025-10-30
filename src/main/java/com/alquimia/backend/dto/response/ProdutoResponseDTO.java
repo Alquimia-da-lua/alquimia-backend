@@ -12,7 +12,8 @@ public record ProdutoResponseDTO(
         Double vlProduto,
         Boolean isAtivo,
         UsuarioResponseDTO cdUsuario,
-        CategoriaEnum categoria) {
+        CategoriaEnum categoria,
+        String imagem) {
 
     public ProdutoResponseDTO(Produto produto){
         this(
@@ -22,9 +23,8 @@ public record ProdutoResponseDTO(
                 produto.getVlProduto(),
                 produto.getIsAtivo(),
                 new UsuarioResponseDTO(produto.getCdUsuario()),
-                produto.getCategoria()
-
-
+                produto.getCategoria(),
+                produto.getImagem()
         );
     }
 
