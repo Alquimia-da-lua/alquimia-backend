@@ -34,7 +34,8 @@ public class AuthenticationService {
         String token = tokenService.generateToken(usuario);
         String refreshToken = tokenService.generateRefreshToken(usuario);
 
-        return (new LoginResponseDTO(usuario.getNmUsuario(),
+        return (new LoginResponseDTO(usuario.getCdUsuario(),
+                usuario.getNmUsuario(),
                 usuario.getEmailUsuario(),
                 usuario.getNuTelefone(),
                 usuario.getRoleUsuario(),

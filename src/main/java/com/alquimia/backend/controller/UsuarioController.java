@@ -2,10 +2,7 @@ package com.alquimia.backend.controller;
 
 import com.alquimia.backend.dto.request.AtualizarUsuarioRequestDTO;
 import com.alquimia.backend.dto.request.EnderecoRequestDTO;
-import com.alquimia.backend.dto.request.LoginRequestDTO;
-import com.alquimia.backend.dto.request.UsuarioRequestDTO;
 import com.alquimia.backend.dto.response.ClienteResponseDTO;
-import com.alquimia.backend.dto.response.LoginResponseDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.exception.CepNaoEncontradoException;
 import com.alquimia.backend.service.UsuarioService;

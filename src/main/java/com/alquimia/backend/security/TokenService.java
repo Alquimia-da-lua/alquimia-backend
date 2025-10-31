@@ -1,5 +1,6 @@
 package com.alquimia.backend.security;
 
+import com.alquimia.backend.exception.TokenInvalidoException;
 import com.alquimia.backend.model.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -63,7 +64,7 @@ public class TokenService {
                     .getSubject();
 
         } catch (JWTVerificationException exception) {
-            return null;
+            throw new TokenInvalidoException();
         }
     }
 }
