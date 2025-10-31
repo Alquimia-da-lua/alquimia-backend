@@ -18,7 +18,7 @@ public class Produto {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer cdProduto;
 
-        @Column(nullable = false)
+        @Column(nullable = false, unique = true) //mudei pra usar o script
         private String nmProduto;
 
         @Column(columnDefinition = "TEXT")
