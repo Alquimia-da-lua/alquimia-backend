@@ -10,6 +10,7 @@ import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.exception.CepNaoEncontradoException;
 import com.alquimia.backend.service.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +22,8 @@ import java.util.List;
 @RequestMapping("/api/usuario")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
-
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping("/buscar/{cdUsuario}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable("cdUsuario") Integer cdUsuario){
@@ -65,7 +63,7 @@ public class UsuarioController {
     public ResponseEntity<ClienteResponseDTO> cadastrarEndereco(@PathVariable("cdUsuario") Integer cdUsuario,
                                                                 @RequestBody @Valid EnderecoRequestDTO enderecoDto) throws CepNaoEncontradoException {
 
-        ClienteResponseDTO response = usuarioService.cadastrarEnderecoNoCliente(cdUsuario, enderecoDto);
+        ClienteResponseDTO response = usuarioService.cadastrarEndereco(cdUsuario, enderecoDto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

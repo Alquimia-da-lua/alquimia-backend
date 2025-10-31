@@ -35,6 +35,23 @@ public class TokenService {
         }
     }
 
+    public String generateRefreshToken(Usuario usuario) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+
+            return JWT.create()
+                    .withIssuer("alquimia-api")
+                    .withClaim("cdUsuario", usuario.getCdUsuario())
+                    .withClaim("role", usuario.getRoleUsuario().name())
+                    .withSubject(usuario.getEmailUsuario())
+                    .withExpiresAt(Instant.now().plusSeconds(86400))
+                    .sign(algorithm);
+
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("Erro ao gerar refresh token: ", exception);
+        }
+    }
+
     public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

@@ -29,8 +29,60 @@ public class SecurityConfig {
                 .cors(cors -> cors.configure(httpSecurity))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
+                        // endpoints sem token
+                        .requestMatchers(HttpMethod.POST,
+                                "/auth/login",
+                                "/auth/register",
+                                "/auth/refresh-token")
+                        .permitAll()
+
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/produto/listar",
+                                "/api/produto/listar/ativos",
+                                "/api/produto/buscar/**")
+                        .permitAll()
+
+                        // endpoints com token
+                        // usuario
+                        .requestMatchers(HttpMethod.GET, "/api/usuario/buscar/{cdUsuario}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/usuario/listar").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/usuario/listar/ativos").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.PUT, "/api/usuario/deletar/{cdUsuario}").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.POST, "/api/usuario/{cdUsuario}/endereco").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.PUT, "/api/usuario/atualizar/{cdUsuario}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+
+                        // endereco
+                        .requestMatchers(HttpMethod.GET, "/api/endereco/{cep}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/endereco/buscar/{cdEndereco}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.POST, "/api/endereco").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.PUT, "/api/endereco/alterar/{cdEndereco}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.DELETE, "/api/endereco/{cdEndereco}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+
+                        // estoque
+                        .requestMatchers("/api/estoque/**").hasRole("FUNCIONARIO")
+
+                        // itemEstoqueController
+                        .requestMatchers("/api/itemestoque/**").hasRole("FUNCIONARIO")
+
+                        // itemPedidoController
+                        .requestMatchers("/api/itempedido/**").hasRole("CLIENTE")
+
+                        // pedido
+                        .requestMatchers(HttpMethod.POST, "/api/pedido").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/pedido/buscar/{cdPedido}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/pedido/listar").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/pedido/listar/cliente/{cdUsuario}").hasRole("CLIENTE")
+                        .requestMatchers(HttpMethod.PUT, "/api/pedido/status/{cdPedido}").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.PUT, "/api/pedido/pagamento/{cdPedido}").hasRole("CLIENTE")
+
+                        // produto
+                        .requestMatchers(HttpMethod.POST, "/api/produto").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.PUT, "/api/produto/alterar/{cdProduto}").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.DELETE, "/api/produto/delete/{cdProduto}").hasRole("FUNCIONARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/produto/**").hasAnyRole("CLIENTE", "FUNCIONARIO")
+
+                        // qualquer outro endpoint precisa de autenticação
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

@@ -3,6 +3,7 @@ package com.alquimia.backend.controller;
 import com.alquimia.backend.dto.request.LoginRequestDTO;
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
 import com.alquimia.backend.dto.response.LoginResponseDTO;
+import com.alquimia.backend.dto.response.RefreshTokenResponseDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.service.AuthenticationService;
 import com.alquimia.backend.service.UsuarioService;
@@ -34,5 +35,12 @@ public class AuthenticationController {
         UsuarioResponseDTO novoUsuario = usuarioService.cadastrarUsuario(usuarioDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<RefreshTokenResponseDTO> refreshToken(@RequestHeader("Authorization") String refreshToken) {
+        RefreshTokenResponseDTO response = authenticationService.refreshToken(refreshToken);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

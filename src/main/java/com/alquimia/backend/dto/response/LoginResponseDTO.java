@@ -7,6 +7,7 @@ public record LoginResponseDTO(
         String emailUsuario,
         String nuTelefone,
         RoleUsuario roleUsuario,
-        String token
+        String token,
+        String refreshToken
 ) {
 }
