@@ -1,10 +1,13 @@
 package com.alquimia.backend.controller;
 
 import com.alquimia.backend.dto.request.AtualizarUsuarioRequestDTO;
+import com.alquimia.backend.dto.request.EnderecoRequestDTO;
 import com.alquimia.backend.dto.request.LoginRequestDTO;
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
+import com.alquimia.backend.dto.response.ClienteResponseDTO;
 import com.alquimia.backend.dto.response.LoginResponseDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
+import com.alquimia.backend.exception.CepNaoEncontradoException;
 import com.alquimia.backend.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,7 +28,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/buscar/{cdUsuario}")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable("cdUsuario") int cdUsuario){
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable("cdUsuario") Integer cdUsuario){
         var usuario = usuarioService.buscarUsuario(cdUsuario);
 
         return ResponseEntity.status(HttpStatus.OK).body(usuario);
@@ -38,7 +41,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/atualizar/{cdUsuario}")
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable("cdUsuario") int cdUsuario,
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable("cdUsuario") Integer cdUsuario,
                                                                @RequestBody @Valid AtualizarUsuarioRequestDTO usuarioDto) {
 
         UsuarioResponseDTO usuarioAtualizado = usuarioService.atualizarUsuario(usuarioDto, cdUsuario);
@@ -47,7 +50,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/deletar/{cdUsuario}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable("cdUsuario") int cdUsuario){
+    public ResponseEntity<Void> deletarUsuario(@PathVariable("cdUsuario") Integer cdUsuario){
         usuarioService.deletarUsuario(cdUsuario);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -56,5 +59,13 @@ public class UsuarioController {
     @GetMapping("/listar/ativos")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosAtivos(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuariosAtivos());
+    }
+
+    @PostMapping("/{cdUsuario}/endereco")
+    public ResponseEntity<ClienteResponseDTO> cadastrarEndereco(@PathVariable("cdUsuario") Integer cdUsuario,
+                                                                @RequestBody @Valid EnderecoRequestDTO enderecoDto) throws CepNaoEncontradoException {
+
+        ClienteResponseDTO response = usuarioService.cadastrarEnderecoNoCliente(cdUsuario, enderecoDto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

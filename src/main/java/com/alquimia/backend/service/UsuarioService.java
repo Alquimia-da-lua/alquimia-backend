@@ -1,28 +1,27 @@
 package com.alquimia.backend.service;
 
 import com.alquimia.backend.dto.request.AtualizarUsuarioRequestDTO;
+import com.alquimia.backend.dto.request.EnderecoRequestDTO;
 import com.alquimia.backend.dto.request.LoginRequestDTO;
 import com.alquimia.backend.dto.request.UsuarioRequestDTO;
+import com.alquimia.backend.dto.response.ClienteResponseDTO;
 import com.alquimia.backend.dto.response.LoginResponseDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.enums.RoleUsuario;
+import com.alquimia.backend.exception.CepNaoEncontradoException;
 import com.alquimia.backend.exception.DadoDuplicadoException;
 import com.alquimia.backend.exception.UsuarioNaoEncontradoException;
 import com.alquimia.backend.model.Cliente;
 import com.alquimia.backend.model.Usuario;
 import com.alquimia.backend.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final ClienteService clienteService;
@@ -46,8 +45,6 @@ public class UsuarioService implements UserDetailsService {
         // criação de usuário (somente cliente)
         Cliente cliente = new Cliente();
         BeanUtils.copyProperties(requestDto, cliente);
-
-        cliente.setSenhaUsuario(new BCryptPasswordEncoder().encode(requestDto.senhaUsuario()));
         cliente.setRoleUsuario(RoleUsuario.CLIENTE);
         usuario = clienteService.cadastrarCliente(cliente);
 
@@ -70,6 +67,22 @@ public class UsuarioService implements UserDetailsService {
         }
 
         return usuarios;
+    }
+
+    // funcao incompleta, esperar pelo jwt
+    public LoginResponseDTO login(LoginRequestDTO loginDto){
+        var usuario = usuarioRepository.findByEmailUsuario(loginDto.emailUsuario())
+                .orElseThrow(UsuarioNaoEncontradoException::new);
+
+        String token = "aaaa";
+
+        return new LoginResponseDTO(
+                usuario.getNmUsuario(),
+                usuario.getEmailUsuario(),
+                usuario.getNuTelefone(),
+                usuario.getRoleUsuario(),
+                token
+        );
     }
 
     public UsuarioResponseDTO atualizarUsuario(AtualizarUsuarioRequestDTO requestDto, Integer cdUsuario){
@@ -125,9 +138,16 @@ public class UsuarioService implements UserDetailsService {
         return usuarios;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return usuarioRepository.findByEmailUsuario(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o email: " + username));
+    public ClienteResponseDTO cadastrarEnderecoNoCliente(Integer cdUsuario, EnderecoRequestDTO enderecoDto) throws CepNaoEncontradoException {
+        Usuario usuario = usuarioRepository.findByCdUsuario(cdUsuario)
+                .orElseThrow(UsuarioNaoEncontradoException::new);
+
+        if (!usuario.getRoleUsuario().equals(RoleUsuario.CLIENTE)) {
+            throw new IllegalArgumentException("Usuário não é um cliente");
+        }
+
+        Cliente cliente = (Cliente) usuario;
+        return clienteService.cadastrarEndereco(cliente.getCdUsuario(), enderecoDto);
     }
+
 }

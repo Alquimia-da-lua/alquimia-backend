@@ -34,6 +34,7 @@ public class ProdutoService {
         produto.setDsProduto(produtoDto.dsProduto());
         produto.setVlProduto(produtoDto.vlProduto());
         produto.setCategoria(produtoDto.categoria());
+        produto.setImagem(produtoDto.imagem());
         produto.setCdUsuario(usuario);
         return new ProdutoResponseDTO(produtoRepository.save(produto));
     }
@@ -60,7 +61,7 @@ public class ProdutoService {
     public List<ProdutoResponseDTO> listarProdutosAtivos() {
         List<ProdutoResponseDTO> produtos = new ArrayList<>();
 
-        List<Produto> model = this.produtoRepository.findAllByIsAtivoTrue().stream().toList();
+        List<Produto> model = this.produtoRepository.findAllByIsAtivoTrue();
         for (Produto produto : model) {
             produtos.add(new ProdutoResponseDTO(produto));
         }
