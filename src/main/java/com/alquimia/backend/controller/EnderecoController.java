@@ -55,4 +55,10 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/cliente/{cdCliente}")
+    public ResponseEntity<EnderecoResponseDTO> buscaEnderecoCliente(@PathVariable Integer cdCliente) {
+        EnderecoResponseDTO endereco = enderecoService.buscarEnderecoCliente(cdCliente);
+        return ResponseEntity.ok(endereco);
+    }
+
 }

@@ -7,6 +7,7 @@ import com.alquimia.backend.dto.response.ViaCepDTO;
 import com.alquimia.backend.exception.CepNaoEncontradoException;
 import com.alquimia.backend.exception.EnderecoNaoEncontradoException;
 import com.alquimia.backend.model.Endereco;
+import com.alquimia.backend.repository.ClienteRepository;
 import com.alquimia.backend.repository.EnderecoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ public class EnderecoService {
 
     private final EnderecoRepository enderecoRepository;
     private final ViaCepClient viaCepClient;
-
 
     public EnderecoService(EnderecoRepository enderecoRepository, ViaCepClient viaCepClient) {
         this.enderecoRepository = enderecoRepository;
@@ -89,6 +89,14 @@ public class EnderecoService {
         Endereco endereco = enderecoRepository.findByCdEndereco(cdEndereco)
                 .orElseThrow(() -> new EnderecoNaoEncontradoException(cdEndereco));
         enderecoRepository.delete(endereco);
+    }
+
+    @Transactional(readOnly = true)
+    public EnderecoResponseDTO buscarEnderecoCliente(Integer cdCliente) {
+        Endereco endereco = enderecoRepository.findByClienteId(cdCliente)
+                .orElseThrow(() -> new RuntimeException("Endereço não encontrado para o cliente com ID: " + cdCliente));
+
+        return new EnderecoResponseDTO(endereco);
     }
 
 

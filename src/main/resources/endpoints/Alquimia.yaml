@@ -1,0 +1,1200 @@
+type: collection.insomnia.rest/5.0
+name: Alquimia da Lua
+meta:
+  id: wrk_044a3a547fb14f509888aa0d16512810
+  created: 1761607751331
+  modified: 1761607751331
+  description: ""
+collection:
+  - name: Usuario
+    meta:
+      id: fld_ac98f6dcea9a488e8259b48b30ed393c
+      created: 1761607788189
+      modified: 1762004864918
+      sortKey: -1761607788189
+      description: ""
+    children:
+      - url: "{{ address }}api/usuario/buscar/2"
+        name: buscarUsuario
+        meta:
+          id: req_5af67342d50641e0a5989a560514ada7
+          created: 1761607797171
+          modified: 1762015856250
+          isPrivate: false
+          description: ""
+          sortKey: -1761607799081
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ address }}api/usuario/cadastrar"
+        name: cadastrarUsuario
+        meta:
+          id: req_aec988c868f44c93b7903cc1f8c3a88b
+          created: 1761607804384
+          modified: 1761945484968
+          isPrivate: false
+          description: ""
+          sortKey: -1761607804384
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            		"nmUsuario": "Dudu Silva",
+            		"emailUsuario": "teste5@teste.com",
+            		"senhaUsuario": "12345678",
+            		"nuTelefone": "48999362138",
+            		"nuCpf": "07204235975"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ address }}api/usuario/listar"
+        name: listarUsuarios
+        meta:
+          id: req_ded10092238740e1bfb3ed3c52f09183
+          created: 1761608772810
+          modified: 1761933282759
+          isPrivate: false
+          description: ""
+          sortKey: -1761607798981
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ address }}api/usuario/atualizar/2"
+        name: atualizarUsuario
+        meta:
+          id: req_bca79a35566443b38f195134cd9b6ab5
+          created: 1761609033858
+          modified: 1762006227212
+          isPrivate: false
+          description: ""
+          sortKey: -1761609033858
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nmUsuario": "João Silva Ferreira",
+            	"senhaUsuario":"12345678",
+            	"nuTelefone": "48988362138"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ address }}api/usuario/deletar/5"
+        name: deletarUsuario
+        meta:
+          id: req_16c1775015744e28a8ca634c0ea59ede
+          created: 1761609469824
+          modified: 1762007470326
+          isPrivate: false
+          description: ""
+          sortKey: -1761609469824
+        method: PUT
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ address }}api/usuario/listar/ativos"
+        name: listarUsuariosAtivos
+        meta:
+          id: req_4cb7e2c6f40c4e57aebf3d303ac46f9a
+          created: 1761609619866
+          modified: 1761933363480
+          isPrivate: false
+          description: ""
+          sortKey: -1761609619866
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ address }}api/usuario/3/endereco"
+        name: cadastrarEndereco
+        meta:
+          id: req_e385cc0c99154ec8ba98513a944bd3f7
+          created: 1761933418716
+          modified: 1762004690947
+          isPrivate: false
+          description: ""
+          sortKey: -1761609619966
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nuCep": "88705000",
+              "dsLogradouro": "Rua José Evaristo Fogaça",
+              "dsLocalidade": "Tubarão",
+              "nmEstado": "SC"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+  - name: Produto
+    meta:
+      id: fld_4a409248ddbf4d069f82b357948e33ba
+      created: 1761609679116
+      modified: 1761675424764
+      sortKey: -1761609679116
+      description: ""
+    children:
+      - url: "{{address}}api/produto"
+        name: cadastrarProduto
+        meta:
+          id: req_7c16f08ae3b045e1a0f3ad96fd262735
+          created: 1761609978272
+          modified: 1762011514890
+          isPrivate: false
+          description: ""
+          sortKey: -1761609978272
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            { 
+            	"categoria": "CABELO",
+              "nmProduto": "Creme Corporal Natural de Abaca252 200ml",
+              "dsProduto": "Permita-se um ritual de calma com o nosso Creme de Lavanda, formulado para nutrir e acalmar. Sua textura suave e de rápida absorção hidrata intensamente, enquanto o aroma relaxante proporciona bem-estar e prepara sua pele para uma noite de descanso.",
+              "vlProduto": 399.90,
+              "cdUsuario": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/produto/listar"
+        name: listarProdutos
+        meta:
+          id: req_569a04102556465e8d92edcfef7551ab
+          created: 1761671680835
+          modified: 1762009637637
+          isPrivate: false
+          description: ""
+          sortKey: -1761671680835
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        authentication:
+          type: none
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/produto/buscar/1"
+        name: buscarProduto
+        meta:
+          id: req_1eeca1ec524d4140bc282cfdc6ebdddd
+          created: 1761671874092
+          modified: 1762005916911
+          isPrivate: false
+          description: ""
+          sortKey: -1761671680935
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        authentication:
+          type: none
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/produto/delete/28"
+        name: deletarProduto
+        meta:
+          id: req_c4ba3b82601f4ca0b2ee28e125c69b63
+          created: 1761671976008
+          modified: 1762008796327
+          isPrivate: false
+          description: ""
+          sortKey: -1761671681035
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/produto/listar/ativos"
+        name: listarProdutosAtivos
+        meta:
+          id: req_fce70d09a93a4a7fbb0b1a5f4796c857
+          created: 1761672016467
+          modified: 1762005927669
+          isPrivate: false
+          description: ""
+          sortKey: -1761671680985
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        authentication:
+          type: none
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/produto/alterar/1"
+        name: alterarProduto
+        meta:
+          id: req_12f8207eb28d48ee9fcd3c24416b0e12
+          created: 1761672207283
+          modified: 1762005158672
+          isPrivate: false
+          description: ""
+          sortKey: -1761671681010
+        method: PUT
+        body:
+          mimeType: application/json
+          text: >-
+            {
+            		"nmProduto": "Creme Corporal Natural de Abacaxi 200ml",
+            		"dsProduto": "Permita-se um ritual de calma com o nosso Creme de Lavanda, formulado para nutrir e acalmar. Sua textura suave e de rápida absorção hidrata intensamente, enquanto o aroma relaxante proporciona bem-estar e prepara sua pele para uma noite de descanso.",
+            		"vlProduto": 199.9,
+            		"cdUsuario": 1,
+            		"categoria": "PELE"
+            	}
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Endereço
+    meta:
+      id: fld_78cdaf4d56fa4fb5949e2391279ed3b1
+      created: 1761672530902
+      modified: 1762004882403
+      sortKey: -1761672530902
+      description: ""
+    children:
+      - url: "{{address}}api/endereco/88705060"
+        name: buscarPorCep
+        meta:
+          id: req_8e719175f5194f6c9410bfefa449fb82
+          created: 1761672536251
+          modified: 1761672802890
+          isPrivate: false
+          description: ""
+          sortKey: -1761672802858
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/endereco"
+        name: cadastrarEndereco
+        meta:
+          id: req_3223337c147042c89eecc4f7deea32e3
+          created: 1761672811258
+          modified: 1762005241628
+          isPrivate: false
+          description: ""
+          sortKey: -1761672802958
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nuCep": "88705000",
+              "dsLogradouro": "Rua José Evaristo Fogaça",
+              "dsLocalidade": "Tubarão",
+              "nmEstado": "SC"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/endereco/buscar/1"
+        name: buscarEndereco
+        meta:
+          id: req_612032891b7445f3903cf5082074f4a1
+          created: 1761673259237
+          modified: 1762005251708
+          isPrivate: false
+          description: ""
+          sortKey: -1761673259237
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/endereco/alterar/1"
+        name: alterarEndereco
+        meta:
+          id: req_f95efa12f2884128bb5f749ad606f54d
+          created: 1761673498687
+          modified: 1762011677846
+          isPrivate: false
+          description: ""
+          sortKey: -1761673498687
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nuCep": "88705060",
+              "dsLogradouro": "Rua José João Fogaça",
+              "dsLocalidade": "Tubarão",
+            	"dsComplemento": "Casa Azul",
+            	"dsBairro": "BECO",
+              "nmEstado": "SC"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/endereco/5"
+        name: deletarEndereco
+        meta:
+          id: req_19a1f1372f9a4ef6bd4b40b104a54bfa
+          created: 1761673503291
+          modified: 1762006562509
+          isPrivate: false
+          description: ""
+          sortKey: -1761673503291
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/endereco/cliente/2"
+        name: buscarEnderecoCliente
+        meta:
+          id: req_0e740a3b0e1440779abd70330ad36cc3
+          created: 1762019993133
+          modified: 1762020459704
+          isPrivate: false
+          description: ""
+          sortKey: -1762019993133
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+  - name: Estoque
+    meta:
+      id: fld_873e8ae7d5d1439f84561474ac1cff8b
+      created: 1761674912687
+      modified: 1762004903363
+      sortKey: -1761674912687
+      description: ""
+    children:
+      - url: "{{address}}api/estoque"
+        name: criarEstoque
+        meta:
+          id: req_42f1227464cb47fc98d50e23307b359b
+          created: 1761675232283
+          modified: 1761966848641
+          isPrivate: false
+          description: ""
+          sortKey: -1761675240913
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "isAtivo": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/estoque"
+        name: listarEstoquesAtivos
+        meta:
+          id: req_5048b752f677404ba9254cab5cddd64e
+          created: 1761676172269
+          modified: 1762005311753
+          isPrivate: false
+          description: ""
+          sortKey: -1761675241013
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/estoque/1"
+        name: buscarEstoquePorId
+        meta:
+          id: req_f731f077e38043e4ab83c06a07c018a1
+          created: 1761676221073
+          modified: 1761733232442
+          isPrivate: false
+          description: ""
+          sortKey: -1761675241113
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/estoque/ativo/2"
+        name: buscarEstoqueAtivoPorId
+        meta:
+          id: req_34e3f8e6467d408aaa129c219ec95750
+          created: 1761676265170
+          modified: 1762005346311
+          isPrivate: false
+          description: ""
+          sortKey: -1761675241213
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/estoque/1/itens"
+        name: listarItensDoEstoque
+        meta:
+          id: req_45671d7e38c443ce8666adb3dd605cf5
+          created: 1761678579797
+          modified: 1762005301059
+          isPrivate: false
+          description: ""
+          sortKey: -1761675241313
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/estoque/2/desativar"
+        name: desativarEstoque
+        meta:
+          id: req_45f59a46373344a2958043e4bc838f80
+          created: 1761678676004
+          modified: 1761680294718
+          isPrivate: false
+          description: ""
+          sortKey: -1761678676004
+        method: PATCH
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/estoque/2/reativar"
+        name: reativarEstoque
+        meta:
+          id: req_382284076c83472aae0cc246db300d87
+          created: 1761678679489
+          modified: 1761680363795
+          isPrivate: false
+          description: ""
+          sortKey: -1761678679489
+        method: PATCH
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+  - name: ItemEstoque
+    meta:
+      id: fld_258aa188e60246a1a8a5dd334966db0a
+      created: 1761675473887
+      modified: 1762004923976
+      sortKey: -1761675473887
+      description: ""
+    children:
+      - url: "{{address}}api/itemestoque"
+        name: criarOuAtualizarItemEstoque
+        meta:
+          id: req_4ef09eb99ef9458f814111a64a34f2cb
+          created: 1761675500035
+          modified: 1762005388850
+          isPrivate: false
+          description: ""
+          sortKey: -1761675503251
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "cdProduto": 3,
+              "cdEstoque": 1,
+              "qtItemEstoque": 30
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/itemestoque/1"
+        name: buscarItemEstoquePorId
+        meta:
+          id: req_d9f082ef286e40d38d1070c0e9b022a5
+          created: 1761680625936
+          modified: 1762005399587
+          isPrivate: false
+          description: ""
+          sortKey: -1761680625936
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/itemestoque/1/adicionar-quantidade"
+        name: adicionarQtdItemEstoque
+        meta:
+          id: req_0376b758738e459e8de277f64effad42
+          created: 1761680727857
+          modified: 1762005404679
+          isPrivate: false
+          description: ""
+          sortKey: -1761680727857
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: ""
+        parameters:
+          - id: pair_67b6e1eb2bd346a0a57f43b35bd06f0d
+            name: qtde
+            value: "2"
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/itemestoque/1/diminuir-quantidade"
+        name: diminuirQtdItemEstoque
+        meta:
+          id: req_40edb3e309474047a0651a273875b4f9
+          created: 1761682499727
+          modified: 1762005408559
+          isPrivate: false
+          description: ""
+          sortKey: -1761680727957
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: ""
+        parameters:
+          - id: pair_67b6e1eb2bd346a0a57f43b35bd06f0d
+            name: qtde
+            value: "1"
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/itemestoque/delete/1"
+        name: deletarItemEstoque
+        meta:
+          id: req_fa8a5635ec04462e843ccd13dba316ac
+          created: 1761682746353
+          modified: 1761682791293
+          isPrivate: false
+          description: ""
+          sortKey: -1761682746353
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+  - name: Pedido
+    meta:
+      id: fld_c3e7f15a620742d19030a0c50ebf937f
+      created: 1761682940449
+      modified: 1762004948207
+      sortKey: -1761682940449
+      description: ""
+    children:
+      - url: "{{address}}api/pedido"
+        name: cadastrarPedido
+        meta:
+          id: req_700fc071d3c444008ed62824125d5c2d
+          created: 1761691560325
+          modified: 1762015893392
+          isPrivate: false
+          description: ""
+          sortKey: -1761691560325
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"vlPedido":0.00,
+            	"vlFrete":15.00,
+            	"tipoPagamento":"CREDITO",
+            	"cdUsuario":2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/pedido/status/2"
+        name: alterarStatusPedido
+        meta:
+          id: req_4d97f645ee294ceca3645cd6f9fdc673
+          created: 1761692900938
+          modified: 1762005460528
+          isPrivate: false
+          description: ""
+          sortKey: -1761692775255.5312
+        method: PUT
+        parameters:
+          - id: pair_d3a5ce8e5d034bb8addcd4d216c73326
+            name: novoStatus
+            value: ENVIADO
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/pedido/buscar/1"
+        name: buscarPedido
+        meta:
+          id: req_b10424ee986f43c5979e74ab95c9c304
+          created: 1761692916334
+          modified: 1762005444928
+          isPrivate: false
+          description: ""
+          sortKey: -1761692230631.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/pedido/listar"
+        name: listarTodosPedidos
+        meta:
+          id: req_cf1e39d628c64ac6ab901518ecd71e68
+          created: 1761692919679
+          modified: 1762005448738
+          isPrivate: false
+          description: ""
+          sortKey: -1761692565784.75
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/pedido/listar/cliente/1"
+        name: listarPedidosPorCliente
+        meta:
+          id: req_6fded321a84846f088359b06c3ad3286
+          created: 1761692923493
+          modified: 1762006672576
+          isPrivate: false
+          description: ""
+          sortKey: -1761692733361.375
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/pedido/pagamento/1"
+        name: alterarTipoPagamento
+        meta:
+          id: req_6a797dc2be0e44ac93e3da18087379a2
+          created: 1761692927196
+          modified: 1762006740981
+          isPrivate: false
+          description: ""
+          sortKey: -1761692817149.6875
+        method: PUT
+        parameters:
+          - id: pair_319964ff837745f2a3364ac29cf7ffcb
+            name: novoTipo
+            value: CREDITO
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+  - name: ItemPedido
+    meta:
+      id: fld_461012e639794b91aaf8dde55f6ccbb9
+      created: 1761694047429
+      modified: 1762005802359
+      sortKey: -1761694047429
+      description: ""
+    children:
+      - url: "{{address}}api/itempedido"
+        name: "cadastrarItemPedido "
+        meta:
+          id: req_0c658fb1433d42e7aa65cfcf4ba16528
+          created: 1761694197950
+          modified: 1762005561312
+          isPrivate: false
+          description: ""
+          sortKey: -1761694197950
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            "cdPedido":1,
+            "cdProduto":3, 
+            "qtItemPedido":3
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/itempedido/listar"
+        name: listarItensPedido
+        meta:
+          id: req_0725dbe6075840e59fa07ad73101d81f
+          created: 1761758044561
+          modified: 1762005564857
+          isPrivate: false
+          description: ""
+          sortKey: -1761758044561
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}api/itempedido/delete/2"
+        name: removerItemPedido
+        meta:
+          id: req_5563e365a1b64be7a4c5ff968006ac76
+          created: 1761758166970
+          modified: 1762005590823
+          isPrivate: false
+          description: ""
+          sortKey: -1761758166970
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+  - name: Auth
+    meta:
+      id: fld_77394ecbcfb94b6c93ff23dbd7c3b47f
+      created: 1762001187393
+      modified: 1762005874630
+      sortKey: -1762001187393
+      description: ""
+    children:
+      - url: "{{address}}auth/register"
+        name: cadastrarAuth
+        meta:
+          id: req_4b7f2a22b2f6459f847eb82be703eb4f
+          created: 1762001199532
+          modified: 1762001493261
+          isPrivate: false
+          description: ""
+          sortKey: -1762001203294
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            		"nmUsuario": "Vitor Tavares",
+            		"emailUsuario": "vt@teste.com",
+            		"senhaUsuario": "12345678",
+            		"nuTelefone": "48999362138",
+            		"nuCpf": "67953400073"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}auth/login"
+        name: login
+        meta:
+          id: req_4e62f54c67ba4611b97dfe904cca7368
+          created: 1762001497942
+          modified: 1762014484880
+          isPrivate: false
+          description: ""
+          sortKey: -1762001497942
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"emailUsuario":"teste@teste.com",
+            	"senhaUsuario":"12345678"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{address}}auth/refresh-token"
+        name: refresh-token
+        meta:
+          id: req_cdab92743c6d415d8c3b542e2b665787
+          created: 1762005604058
+          modified: 1762005790365
+          isPrivate: false
+          description: ""
+          sortKey: -1762005604058
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+            id: pair_449a511d7a994fec91e06713633236de
+          - id: pair_ac6d56973ee44eca96aea61e62ae9b58
+            name: Authorization
+            value: "{{token}}"
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: none
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_89c3490a0998cfad7541a26918bd3e350cbb2baf
+    created: 1761607751340
+    modified: 1761607751340
+environments:
+  name: Base Environment
+  meta:
+    id: env_89c3490a0998cfad7541a26918bd3e350cbb2baf
+    created: 1761607751334
+    modified: 1762020105082
+    isPrivate: false
+  data:
+    address: localhost:8084/
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhbHF1aW1pYS1hcGkiLCJjZFVzdWFyaW8iOjEsInJvbGUiOiJGVU5DSU9OQVJJTyIsInN1YiI6InRlc3RlQHRlc3RlLmNvbSIsImV4cCI6MTc2MjAyMzY4NX0.Y5I-M7qiMrfO2kxbaJFlHhf-LEYyU64vgdBxVcPS42Y

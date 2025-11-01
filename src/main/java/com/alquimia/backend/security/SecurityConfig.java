@@ -61,6 +61,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/endereco").hasAnyRole("CLIENTE", "FUNCIONARIO")
                         .requestMatchers(HttpMethod.PUT, "/api/endereco/alterar/{cdEndereco}").hasAnyRole("CLIENTE", "FUNCIONARIO")
                         .requestMatchers(HttpMethod.DELETE, "/api/endereco/{cdEndereco}").hasAnyRole("CLIENTE", "FUNCIONARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/endereco/cliente/{cdCliente}").hasAnyRole("CLIENTE", "FUNCIONARIO")
 
                         // estoque
                         .requestMatchers("/api/estoque/**").hasRole("FUNCIONARIO")
