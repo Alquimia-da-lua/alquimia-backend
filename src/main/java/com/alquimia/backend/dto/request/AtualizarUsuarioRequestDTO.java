@@ -24,7 +24,6 @@ public record AtualizarUsuarioRequestDTO(
         @Size(min = 11, max = 11, message = "CPF do usuário deve conter 11 dígitos")
         String nuCpf,
 
-        @NotBlank
         Endereco endereco
 ) {
 }
