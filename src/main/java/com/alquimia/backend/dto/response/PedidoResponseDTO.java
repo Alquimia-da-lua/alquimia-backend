@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 public record PedidoResponseDTO(Integer cdPedido,
                                 StatusPedido statusPedido,
                                 TipoPagamento tipo,
-                                Usuario cdUsuario,
+                                UsuarioResponseDTO cdUsuario,
                                 List<ItemPedidoResponseDTO> itens) {
     public PedidoResponseDTO(Pedido pedido){
         this(pedido.getCdPedido(),
                 pedido.getStatusPedido(),
-                pedido.getTipoPagamento(),
-                pedido.getCdUsuario(),
+                pedido.getTipoPagamento(),               
+                new UsuarioResponseDTO(pedido.getCdUsuario()),
                 pedido.getItens().stream().map(ItemPedidoResponseDTO::new).collect(Collectors.toList()));
     }
 }
