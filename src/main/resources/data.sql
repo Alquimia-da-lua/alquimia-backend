@@ -11,14 +11,14 @@
       senha_usuario
   )
   VALUES (
-          1,
-      'teste2@teste.com',
+      1,
+      'teste@teste.com',
       TRUE,
       'João Silva',
       '62535430401',
       '48999362138',
       'FUNCIONARIO',
-      '12345678'
+      '$2a$10$DOzrhsOOiwWUsI0rf4g4Gu76VFJkk3cY9o/KFzgtoVHfTnITBWbGW'
   )
   ON CONFLICT (cd_usuario) DO NOTHING;
  SELECT setval('usuario_cd_usuario_seq', (SELECT MAX(cd_usuario) FROM usuario));
@@ -30,7 +30,7 @@
   -- ALTER SEQUENCE produto_cd_produto_seq RESTART WITH 1; -- Reinicia o ID serial (opcional)
 
   INSERT INTO public.produto (
-                              cd_produto,
+      cd_produto,
       nm_produto,
       ds_produto,
       vl_produto,
@@ -64,3 +64,55 @@
   (24,'Aromatizante em Spray Natural de Limão 50ml', 'Aroma cítrico, vibrante e intensamente refrescante. Ideal para promover clareza mental, foco e elevar o humor, combatendo a fadiga e a letargia. Proporciona uma sensação imediata de limpeza e energia, sendo perfeito para cozinhas, escritórios e banheiros.', 79.90, 'AROMATIZANTE', 1, 'https://i.ibb.co/TDgq98fd/aromatizante-spray-limao.png')
   ON CONFLICT (cd_produto) DO NOTHING;
  SELECT setval('produto_cd_produto_seq', (SELECT MAX(cd_produto) FROM produto));
+
+-- DADOS INICIAIS (DML) - INSERÇÃO DE ESTOQUE
+
+ INSERT INTO public.estoque (
+     cd_estoque,
+     is_ativo
+ )
+ VALUES (
+            1,
+            TRUE
+        )
+     ON CONFLICT (cd_estoque) DO NOTHING;
+
+ SELECT setval('estoque_cd_estoque_seq', (SELECT MAX(cd_estoque) FROM estoque));
+
+ -- DADOS INICIAIS (DML) - INSERÇÃO DE ITENS DE ESTOQUE
+-- Cada produto com quantidade inicial de 200
+
+ INSERT INTO public.item_estoque (
+     cd_item_estoque,
+     cd_produto,
+     cd_estoque,
+     qt_item_estoque
+ )
+ VALUES
+     (1, 1, 1, 200),
+     (2, 2, 1, 200),
+     (3, 3, 1, 200),
+     (4, 4, 1, 200),
+     (5, 5, 1, 200),
+     (6, 6, 1, 200),
+     (7, 7, 1, 200),
+     (8, 8, 1, 200),
+     (9, 9, 1, 200),
+     (10, 10, 1, 200),
+     (11, 11, 1, 200),
+     (12, 12, 1, 200),
+     (13, 13, 1, 200),
+     (14, 14, 1, 200),
+     (15, 15, 1, 200),
+     (16, 16, 1, 200),
+     (17, 17, 1, 200),
+     (18, 18, 1, 200),
+     (19, 19, 1, 200),
+     (20, 20, 1, 200),
+     (21, 21, 1, 200),
+     (22, 22, 1, 200),
+     (23, 23, 1, 200),
+     (24, 24, 1, 200)
+     ON CONFLICT (cd_item_estoque) DO NOTHING;
+
+ SELECT setval('item_estoque_cd_item_estoque_seq', (SELECT MAX(cd_item_estoque) FROM item_estoque));
