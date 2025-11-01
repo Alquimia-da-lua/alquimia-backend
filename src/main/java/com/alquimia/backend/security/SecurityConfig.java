@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/api/produto/listar/ativos",
                                 "/api/produto/buscar/**")
                         .permitAll()
-
+                        .requestMatchers("/api/produto/**").permitAll()
                         // endpoints com token
                         // usuario
                         .requestMatchers(HttpMethod.GET, "/api/usuario/buscar/{cdUsuario}").hasAnyRole("CLIENTE", "FUNCIONARIO")
@@ -69,7 +69,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/itemestoque/**").hasRole("FUNCIONARIO")
 
                         // itemPedidoController
-                        .requestMatchers("/api/itempedido/**").hasRole("CLIENTE")
+                        .requestMatchers("/api/itempedido/**").hasAnyRole("CLIENTE", "FUNCIONARIO")
 
                         // pedido
                         .requestMatchers(HttpMethod.POST, "/api/pedido").hasRole("CLIENTE")
@@ -80,9 +80,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/pedido/pagamento/{cdPedido}").hasRole("CLIENTE")
 
                         // produto
-                        .requestMatchers(HttpMethod.POST, "/api/produto").hasRole("FUNCIONARIO")
-                        .requestMatchers(HttpMethod.PUT, "/api/produto/alterar/{cdProduto}").hasRole("FUNCIONARIO")
-                        .requestMatchers(HttpMethod.DELETE, "/api/produto/delete/{cdProduto}").hasRole("FUNCIONARIO")
+//                        .requestMatchers(HttpMethod.POST, "/api/produto").hasRole("FUNCIONARIO")
+//                        .requestMatchers(HttpMethod.PUT, "/api/produto/alterar/{cdProduto}").hasRole("FUNCIONARIO")
+//                        .requestMatchers(HttpMethod.DELETE, "/api/produto/delete/{cdProduto}").hasRole("FUNCIONARIO")
                         .requestMatchers(HttpMethod.GET, "/api/produto/**").hasAnyRole("CLIENTE", "FUNCIONARIO")
 
                         // qualquer outro endpoint precisa de autenticação

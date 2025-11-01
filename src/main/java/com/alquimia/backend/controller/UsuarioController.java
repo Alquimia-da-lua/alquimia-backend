@@ -36,6 +36,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/atualizar/{cdUsuario}")
+
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable("cdUsuario") Integer cdUsuario,
                                                                @RequestBody @Valid AtualizarUsuarioRequestDTO usuarioDto) {
 

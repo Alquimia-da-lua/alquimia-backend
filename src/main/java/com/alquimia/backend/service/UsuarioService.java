@@ -87,21 +87,38 @@ public class UsuarioService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByCdUsuario(cdUsuario)
                 .orElseThrow(UsuarioNaoEncontradoException::new);
 
-        if(usuarioRepository.findByEmailUsuario(requestDto.emailUsuario()).isPresent()) {
-            throw new DadoDuplicadoException("Email já cadastrado");
 
-        } else if (requestDto.emailUsuario() != null && !requestDto.emailUsuario().isBlank()
-                // checando se o email ja nao é do próprio usuário
-                && !requestDto.emailUsuario().equals(usuario.getEmailUsuario())) {
-            usuario.setEmailUsuario(requestDto.emailUsuario());
+        //VERIFICAÇÃO CONDICIONAL E ANTI-CONFLITO DO EMAIL
+        if (requestDto.emailUsuario() != null && !requestDto.emailUsuario().isBlank()) {
+
+            // Se o email na requisição for DIFERENTE do email atual do usuário no banco:
+            if (!requestDto.emailUsuario().equals(usuario.getEmailUsuario())) {
+
+                //Verifica se o novo email já está em uso por OUTRO usuário (excluindo o ID atual)
+                if (usuarioRepository.findByEmailUsuarioAndCdUsuarioNot(requestDto.emailUsuario(), cdUsuario).isPresent()) {
+                    throw new DadoDuplicadoException("Email já cadastrado");
+                }
+
+                // Se for válido, atualiza o email:
+                usuario.setEmailUsuario(requestDto.emailUsuario());
+            }
+            // Se o email for igual ao que já está no banco, ele passa por aqui sem ser re-validado, evitando o 409.
         }
 
-        if(usuarioRepository.findByNuCpf(requestDto.nuCpf()).isPresent()) {
-            throw new DadoDuplicadoException("CPF já cadastrado");
+        // VERIFICAÇÃO CONDICIONAL E ANTI-CONFLITO DO CPF
+        if (requestDto.nuCpf() != null && !requestDto.nuCpf().isBlank()) {
 
-        } else if (requestDto.nuCpf() != null && !requestDto.nuCpf().isBlank()
-                && !requestDto.nuCpf().equals(usuario.getNuCpf())) {
-            usuario.setNuCpf(requestDto.nuCpf());
+            // Se o CPF na requisição for DIFERENTE do CPF atual do usuário no banco:
+            if (!requestDto.nuCpf().equals(usuario.getNuCpf())) {
+
+                //Verifica se o novo CPF já está em uso por OUTRO usuário (excluindo o ID atual)
+                if (usuarioRepository.findByNuCpfAndCdUsuarioNot(requestDto.nuCpf(), cdUsuario).isPresent()) {
+                    throw new DadoDuplicadoException("CPF já cadastrado");
+                }
+
+                // Se for válido, atualiza o CPF:
+                usuario.setNuCpf(requestDto.nuCpf());
+            }
         }
 
         if (requestDto.nmUsuario() != null && !requestDto.nmUsuario().isBlank()) {
@@ -115,6 +132,7 @@ public class UsuarioService implements UserDetailsService {
         if (requestDto.nuTelefone() != null && !requestDto.nuTelefone().isBlank()) {
             usuario.setNuTelefone(requestDto.nuTelefone());
         }
+
         return new UsuarioResponseDTO(usuarioRepository.save(usuario));
     }
 
