@@ -77,6 +77,7 @@ public class UsuarioService {
         String token = "aaaa";
 
         return new LoginResponseDTO(
+                usuario.getCdUsuario(),
                 usuario.getNmUsuario(),
                 usuario.getEmailUsuario(),
                 usuario.getNuTelefone(),
