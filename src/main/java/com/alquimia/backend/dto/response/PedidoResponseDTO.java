@@ -13,14 +13,12 @@ public record PedidoResponseDTO(Integer cdPedido,
                                 StatusPedido statusPedido,
                                 TipoPagamento tipo,
                                 Usuario cdUsuario,
-                                StatusPedido statusPedido,
                                 List<ItemPedidoResponseDTO> itens) {
     public PedidoResponseDTO(Pedido pedido){
         this(pedido.getCdPedido(),
                 pedido.getStatusPedido(),
                 pedido.getTipoPagamento(),
                 pedido.getCdUsuario(),
-                pedido.getStatusPedido(),
                 pedido.getItens().stream().map(ItemPedidoResponseDTO::new).collect(Collectors.toList()));
     }
 }
