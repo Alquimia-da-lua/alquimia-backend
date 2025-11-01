@@ -2,14 +2,12 @@ package com.alquimia.backend.controller;
 
 import com.alquimia.backend.dto.request.AtualizarUsuarioRequestDTO;
 import com.alquimia.backend.dto.request.EnderecoRequestDTO;
-import com.alquimia.backend.dto.request.LoginRequestDTO;
-import com.alquimia.backend.dto.request.UsuarioRequestDTO;
 import com.alquimia.backend.dto.response.ClienteResponseDTO;
-import com.alquimia.backend.dto.response.LoginResponseDTO;
 import com.alquimia.backend.dto.response.UsuarioResponseDTO;
 import com.alquimia.backend.exception.CepNaoEncontradoException;
 import com.alquimia.backend.service.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,18 +19,8 @@ import java.util.List;
 @RequestMapping("/api/usuario")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
-
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
-
-    @PostMapping("/cadastrar")
-    public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioDto){
-        UsuarioResponseDTO novoUsuario = usuarioService.cadastrarUsuario(usuarioDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
-    }
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping("/buscar/{cdUsuario}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable("cdUsuario") Integer cdUsuario){
@@ -47,15 +35,8 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listarUsuarios());
     }
 
-    // funcao incompleta, esperar pelo jwt
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginDto){
-        LoginResponseDTO login = usuarioService.login(loginDto);
+    @PutMapping("/atualizar/{cdUsuario}")
 
-        return ResponseEntity.status(HttpStatus.OK).body(login);
-    }
-
-        @PutMapping("/atualizar/{cdUsuario}")
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable("cdUsuario") Integer cdUsuario,
                                                                @RequestBody @Valid AtualizarUsuarioRequestDTO usuarioDto) {
 
@@ -80,7 +61,7 @@ public class UsuarioController {
     public ResponseEntity<ClienteResponseDTO> cadastrarEndereco(@PathVariable("cdUsuario") Integer cdUsuario,
                                                                 @RequestBody @Valid EnderecoRequestDTO enderecoDto) throws CepNaoEncontradoException {
 
-        ClienteResponseDTO response = usuarioService.cadastrarEnderecoNoCliente(cdUsuario, enderecoDto);
+        ClienteResponseDTO response = usuarioService.cadastrarEndereco(cdUsuario, enderecoDto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
