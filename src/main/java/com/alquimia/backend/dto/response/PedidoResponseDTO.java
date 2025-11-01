@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record PedidoResponseDTO(Integer cdPedido,
-                                Usuario cdUsuario,
+                                UsuarioResponseDTO cdUsuario,
                                 List<ItemPedidoResponseDTO> itens) {
     public PedidoResponseDTO(Pedido pedido){
         this(pedido.getCdPedido(),
-                pedido.getCdUsuario(),
+                new UsuarioResponseDTO(pedido.getCdUsuario()),
                 pedido.getItens().stream().map(ItemPedidoResponseDTO::new).collect(Collectors.toList()));
     }
 }
